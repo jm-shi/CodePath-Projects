@@ -2,9 +2,6 @@
 //  AppDelegate.swift
 //  MovieViewer
 //
-//  Created by admin on 1/28/17.
-//  Copyright © 2017 JS. All rights reserved.
-//
 
 import UIKit
 
