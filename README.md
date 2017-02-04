@@ -22,6 +22,9 @@ The following **optional** features are implemented:
 - [ ] Customize the UI.
 
 ## Video Walkthrough 
+<img src='http://i.imgur.com/Jvl2g5b.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
