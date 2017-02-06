@@ -2,7 +2,7 @@
 
 Flicks is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-Time spent: 3 hours (work in progress)
+Time spent: 3 hours
 
 ## User Stories
 
@@ -22,11 +22,9 @@ The following **optional** features are implemented:
 - [ ] Customize the UI.
 
 ## Video Walkthrough 
-<img src='http://i.imgur.com/Jvl2g5b.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/mT02D1a.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
-
-## Notes
 
 ## License
 
