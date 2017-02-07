@@ -2,11 +2,7 @@
 
 Flicks is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-<<<<<<< HEAD
 Time spent: 8 hours
-=======
-Time spent: 3 hours
->>>>>>> 755c4222577777c6fc69a6d2dd652eafd6d363c4
 
 ## User Stories
 
@@ -44,7 +40,6 @@ The following **optional** features are implemented:
 - [ ] Customize the navigation bar.
 
 ## Video Walkthrough 
-<<<<<<< HEAD
 <img src='http://i.imgur.com/pxNuGyD.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
@@ -54,12 +49,6 @@ Codepath for project assignment
 Signal error icon created by Roselin Christina.S from the Noun Project
 Reachability implemented by Ashley Mills
 
-=======
-<img src='http://i.imgur.com/mT02D1a.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
-
-GIF created with [LiceCap](http://www.cockos.com/licecap/).
-
->>>>>>> 755c4222577777c6fc69a6d2dd652eafd6d363c4
 ## License
 
 Copyright 2017 Jamie Shi
