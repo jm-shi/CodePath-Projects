@@ -45,8 +45,8 @@ The following **optional** features are implemented:
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Credits
-Codepath for project assignment
-Signal error icon created by Roselin Christina.S from the Noun Project
+Codepath for project assignment <br /> 
+Signal error icon created by Roselin Christina.S from the Noun Project <br />
 Reachability implemented by Ashley Mills
 
 ## License
