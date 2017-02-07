@@ -6,48 +6,16 @@
 import UIKit
 import AFNetworking
 import MBProgressHUD
+import ReachabilitySwift
 
-class InfiniteScrollActivityView: UIView {
-    var activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
-    static let defaultHeight:CGFloat = 60.0
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        setupActivityIndicator()
-    }
-    
-    override init(frame aRect: CGRect) {
-        super.init(frame: aRect)
-        setupActivityIndicator()
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        activityIndicatorView.center = CGPoint(x: self.bounds.size.width/2, y: self.bounds.size.height/2)
-    }
-    
-    func setupActivityIndicator() {
-        activityIndicatorView.activityIndicatorViewStyle = .gray
-        activityIndicatorView.hidesWhenStopped = true
-        self.addSubview(activityIndicatorView)
-    }
-    
-    func stopAnimating() {
-        self.activityIndicatorView.stopAnimating()
-        self.isHidden = true
-    }
-    
-    func startAnimating() {
-        self.isHidden = false
-        self.activityIndicatorView.startAnimating()
-    }
-}
-
-class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
+class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UISearchBarDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var networkError: UIView!
     
     var movies: [NSDictionary]?
+    var filteredMovies: [NSDictionary]?
     var isMoreDataLoading = false
     var loadingMoreView:InfiniteScrollActivityView?
     
@@ -61,16 +29,44 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         loadingMoreView!.isHidden = true
         tableView.addSubview(loadingMoreView!)
         
-        var insets = tableView.contentInset;
-        insets.bottom += InfiniteScrollActivityView.defaultHeight;
+        var insets = tableView.contentInset
+        insets.bottom += InfiniteScrollActivityView.defaultHeight
         tableView.contentInset = insets
         
         tableView.dataSource = self
         tableView.delegate = self
+        searchBar.delegate = self
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
         tableView.insertSubview(refreshControl, at: 0)
+        
+        
+        // Show error message when there is a networking error
+        // Credits to Ashley Mills for reachability code template
+        let reachability = Reachability()!
+        
+        reachability.whenReachable = { reachability in
+            DispatchQueue.main.async {
+                self.networkError.isHidden = true
+            }
+        }
+        reachability.whenUnreachable = { reachability in
+            DispatchQueue.main.async {
+                self.networkError.isHidden = false
+                self.searchBar.isHidden = true
+                self.tableView.isHidden = true
+                self.loadingMoreView?.stopAnimating()
+                refreshControl.endRefreshing()
+            }
+        }
+        
+        do {
+            try reachability.startNotifier()
+        } catch {
+            print("Unable to start notifier")
+        }
+
         
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")!
@@ -189,31 +185,149 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let movies = movies {
-            return movies.count
+        if (searchBar.text?.isEmpty)! {
+            if let movies = movies {
+                return movies.count
+            }
         }
         else {
-            return 0
+            if let filteredMovies = filteredMovies {
+                return filteredMovies.count
+            }
         }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
         
         let movie = movies![indexPath.row]
-        let title = movie["title"] as! String
-        let overview = movie["overview"] as! String
-        let posterPath = movie["poster_path"] as! String
-        
         let baseUrl = "https://image.tmdb.org/t/p/w500"
+        var title: String
+        var overview: String
         
-        let imageUrl = NSURL(string: baseUrl + posterPath)
-        
-        cell.titleLabel.text = title
-        cell.overviewLabel.text = overview
-        cell.posterView.setImageWith(imageUrl! as URL)
+        if (searchBar.text?.isEmpty)! {
+            title = movie["title"] as! String
+            overview = movie["overview"] as! String
+            if let posterPath = movie["poster_path"] as? String {
+                cell.titleLabel.text = title
+                cell.overviewLabel.text = overview
+                fadeInDetails(baseUrl + posterPath, title: title, overview: overview, cellForRowAt: indexPath, cell: cell)
+            }
+        }
+        else {
+            let filteredMovie = filteredMovies![indexPath.row]
+            title = filteredMovie["title"] as! String
+            overview = filteredMovie["overview"] as! String
+            if let posterPath = filteredMovie["poster_path"] as? String {
+                fadeInDetails(baseUrl + posterPath, title: title, overview: overview, cellForRowAt: indexPath, cell: cell)
+            }
+        }
         
         return cell
     }
+    
+    // Fade in title, overview, and image loaded from network
+    func fadeInDetails(_ imageUrl: String, title: String, overview: String, cellForRowAt indexPath: IndexPath, cell: MovieCell) {
+        let imageRequest = NSURLRequest(url: NSURL(string: imageUrl)! as URL)
+        //let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
+        cell.titleLabel.text = title
+        cell.overviewLabel.text = overview
+        cell.posterView.setImageWith(
+            imageRequest as URLRequest,
+            placeholderImage: nil,
+            success: { (imageRequest, imageResponse, image) -> Void in
+                
+                // imageResponse will be nil if the image is cached
+                if imageResponse != nil {
+                    cell.posterView.alpha = 0.0
+                    cell.posterView.image = image
+                    UIView.animate(withDuration: 0.3, animations: { () -> Void in
+                        cell.posterView.alpha = 1.0
+                    })
+                } else {
+                    cell.posterView.image = image
+                }
+        },
+            failure: { (imageRequest, imageResponse, error) -> Void in
+        })
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        self.searchBar.showsCancelButton = true
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        tableView.reloadData()
+        if searchText.isEmpty {
+            filteredMovies = movies
+        }
+        else {
+            filteredMovies = movies?.filter({ (movie: NSDictionary) -> Bool in
+                if let title = movie["title"] as? String {
+                    return title.range(of: searchText, options: .caseInsensitive) != nil
+                }
+                return false
+            })
+        }
+        
+        tableView.reloadData()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPath(for: cell)
+        
+        let detailViewController = segue.destination as! DetailViewController
+        
+        if let movie = filteredMovies?[indexPath!.row] {
+            detailViewController.movie = movie
+        }
+        else {
+            detailViewController.movie = movies![(indexPath?.row)!]
+        }
+    }
+    
+}
 
+class InfiniteScrollActivityView: UIView {
+    var activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
+    static let defaultHeight:CGFloat = 60.0
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setupActivityIndicator()
+    }
+    
+    override init(frame aRect: CGRect) {
+        super.init(frame: aRect)
+        setupActivityIndicator()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        activityIndicatorView.center = CGPoint(x: self.bounds.size.width/2, y: self.bounds.size.height/2)
+    }
+    
+    func setupActivityIndicator() {
+        activityIndicatorView.activityIndicatorViewStyle = .gray
+        activityIndicatorView.hidesWhenStopped = true
+        self.addSubview(activityIndicatorView)
+    }
+    
+    func stopAnimating() {
+        self.activityIndicatorView.stopAnimating()
+        self.isHidden = true
+    }
+    
+    func startAnimating() {
+        self.isHidden = false
+        self.activityIndicatorView.startAnimating()
+    }
 }
