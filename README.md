@@ -2,7 +2,7 @@
 
 Flicks is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-Time spent: 8 hours
+Time spent: 9 hours
 
 ## User Stories
 
@@ -31,7 +31,7 @@ Flicks is a movies app displaying box office and top rental DVDs using [The Movi
 The following **required** functionality is completed:
 
 - [x] User can view movie details by tapping on a cell.
-- [ ] User can select from a tab bar for either **Now Playing** or **Top Rated** movies.
+- [x] User can select from a tab bar for either **Now Playing** or **Top Rated** movies.
 - [ ] Customize the selection effect of the cell.
 
 The following **optional** features are implemented:
@@ -46,8 +46,9 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Credits
 Codepath for project assignment <br /> 
-Signal error icon created by Roselin Christina.S from the Noun Project <br />
-Reachability implemented by Ashley Mills
+Roselin Christina.S from the Noun Project for signal error icon <br />
+Romualdas Jurgaitis from the Noun Project for camera and popcorn icon <br />
+Ashley Mills for Reachability implementation
 
 ## License
 

@@ -14,6 +14,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var networkError: UIView!
     
+    var endpoint: String!
     var movies: [NSDictionary]?
     var filteredMovies: [NSDictionary]?
     var isMoreDataLoading = false
@@ -56,8 +57,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                 self.networkError.isHidden = false
                 self.searchBar.isHidden = true
                 self.tableView.isHidden = true
-                self.loadingMoreView?.stopAnimating()
-                refreshControl.endRefreshing()
+                MBProgressHUD.hide(for: self.view, animated: true)
             }
         }
         
@@ -69,7 +69,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
 
         
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")!
+        let url = URL(string: "https://api.themoviedb.org/3/movie/\(endpoint!)?api_key=\(apiKey)")!
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
         let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
         MBProgressHUD.showAdded(to: self.view, animated: true)
