@@ -42,7 +42,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
         tableView.insertSubview(refreshControl, at: 0)
         
-        
         // Show error message when there is a networking error
         // Credits to Ashley Mills for reachability code template
         let reachability = Reachability()!
@@ -67,22 +66,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             print("Unable to start notifier")
         }
 
-        let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = URL(string: "https://api.themoviedb.org/3/movie/\(endpoint!)?api_key=\(apiKey)")!
-        let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
-        let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
-        MBProgressHUD.showAdded(to: self.view, animated: true)
-        let task: URLSessionDataTask = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
-            if let data = data {
-                if let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
-                    self.movies = (dataDictionary["results"] as? [NSDictionary])!
-                    self.tableView.reloadData()
-                    MBProgressHUD.hide(for: self.view, animated: true)
-                }
-            }
-        }
-        
-        task.resume()
+        self.networkRequest()
     }
     
     // Makes a network request to get updated data
@@ -99,7 +83,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     func networkRequest() {
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = URL(string: "https://api.themoviedb.org/3/movie/\(endpoint!)?api_key=\(apiKey)")!
+        let url = URL(string: "https://api.themoviedb.org/3/movie/\(endpoint!)?api_key=\(apiKey)&offset=\(self.movies.count)")!
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
         
         // Configure session so that completion handler is executed on main UI thread
@@ -108,6 +92,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             delegate:nil,
             delegateQueue:OperationQueue.main
         )
+        
+        MBProgressHUD.showAdded(to: self.view, animated: true)
         
         let task : URLSessionDataTask = session.dataTask(with: request, completionHandler:
             { (data, response,error) in
@@ -151,7 +137,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                 loadingMoreView?.frame = frame
                 loadingMoreView!.startAnimating()
                 
-                // Code to load more results
+                // Load more results
                 loadMoreData()		
             }
         }
@@ -173,8 +159,11 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
         
+        cell.selectionStyle = .none
+
         let movie = movies[indexPath.row]
         let baseUrl = "https://image.tmdb.org/t/p/w500"
+        
         var title: String
         var overview: String
         
@@ -201,8 +190,15 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     // Fade in title, overview, and image loaded from network
     func fadeInDetails(_ imageUrl: String, title: String, overview: String, cellForRowAt indexPath: IndexPath, cell: MovieCell) {
+        
+        
         let imageRequest = NSURLRequest(url: NSURL(string: imageUrl)! as URL)
-        //let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
+        
+        
+   //     let smallImageRequest = NSURLRequest(url: NSURL(string: smallImageUrl)! as URL)
+   //     let largeImageRequest = NSURLRequest(url: NSURL(string: largeImageUrl)! as URL)
+        
+        
         cell.titleLabel.text = title
         cell.overviewLabel.text = overview
         cell.posterView.setImageWith(imageRequest as URLRequest, placeholderImage: nil, success: { (imageRequest, imageResponse, image) -> Void in
