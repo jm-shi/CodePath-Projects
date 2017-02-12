@@ -36,6 +36,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
         
+        // Make status bar text color white
+        UIApplication.shared.statusBarStyle = .lightContent
+        
         return true
     }
 

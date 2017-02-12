@@ -15,6 +15,8 @@ class MovieCell: UITableViewCell {
         super.awakeFromNib()
         self.layoutMargins = UIEdgeInsets.zero
         self.preservesSuperviewLayoutMargins = false
+        overviewLabel.textColor = UIColor.orange
+        titleLabel.textColor = UIColor.orange
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -18,6 +18,8 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        scrollView.backgroundColor = UIColor.black
+        
         scrollView.contentSize = CGSize(width: scrollView.frame.size.width, height: infoView.frame.origin.y + infoView.frame.origin.y + infoView.frame.size.height)
         
         let title = movie["title"] as? String
@@ -34,6 +36,8 @@ class DetailViewController: UIViewController {
             posterImageView.setImageWith(posterUrl! as URL)
         }
         
+        titleLabel.textColor = UIColor.orange
+        overviewLabel.textColor = UIColor.orange
     }
 
     override func didReceiveMemoryWarning() {
