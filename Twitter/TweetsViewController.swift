@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import AFNetworking
 
 class TweetsViewController: UIViewController {
 
@@ -11,14 +12,15 @@ class TweetsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        TwitterClient.sharedInstance?.homeTimeline(success: { (tweets: [Tweet]) -> ()  in
+        TwitterClient.sharedInstance!.homeTimeline(success: { (tweets: [Tweet]) -> ()  in
             self.tweets = tweets
-            for tweet in tweets {
-                print(tweet.text!)
-            }
+            print("In TweetsViewController viewDidLoad")
+          //  for tweet in tweets {
+          //  print(tweet.text!)
+          //  }
         }, failure: { (error: Error) -> () in
-            print(error.localizedDescription)
+            print("Failed to get home timeline")
+            //print(error.localizedDescription)
         })
     }
 
