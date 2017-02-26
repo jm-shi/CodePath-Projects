@@ -18,7 +18,7 @@ class User: NSObject {
         self.dictionary = dictionary
         
         name = dictionary["name"] as? String as NSString?
-        screenname = dictionary["name"] as? String as NSString?
+        screenname = dictionary["screen_name"] as? String as NSString?
         
         let profileUrlString = dictionary["profile_image_url_https"] as? String
         if let profileUrlString = profileUrlString {
@@ -37,14 +37,14 @@ class User: NSObject {
             // If so, turn it back into a user and store it into current user
             if _currentUser == nil {
                 let defaults = UserDefaults.standard
-                let userData = defaults.object(forKey: "currentUserData")
+                let userData = defaults.object(forKey: "currentUserData") as? Data
                 
                 if let userData = userData {
-                    let dictionary = try! JSONSerialization.data(withJSONObject: userData, options: []) as! NSDictionary
+                    let dictionary = try! JSONSerialization.jsonObject(with: userData, options: []) as! NSDictionary
+
                     _currentUser = User(dictionary: dictionary)
                 }
             }
-            
             return _currentUser
         }
         set(user) {
@@ -57,7 +57,7 @@ class User: NSObject {
                 defaults.set(data, forKey: "currentUserData")
             }
             else {
-                defaults.set(nil, forKey: "currentUserData")
+                defaults.removeObject(forKey: "currentUserData")
             }
             
             defaults.synchronize()
