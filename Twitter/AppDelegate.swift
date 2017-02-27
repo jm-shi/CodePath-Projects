@@ -19,7 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "TweetsNavigationController")
-            self.window?.rootViewController = vc
+            window?.rootViewController = vc
+            
         }
         else {
             print("There is no current user")
@@ -61,6 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //print(url.description)
         print("AppDelegate handleOpenUrl")
         TwitterClient.sharedInstance?.handleOpenUrl(url: url)
+
         return true
     }
     

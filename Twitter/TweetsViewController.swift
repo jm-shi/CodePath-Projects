@@ -12,16 +12,19 @@ class TweetsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        TwitterClient.sharedInstance!.homeTimeline(success: { (tweets: [Tweet]) -> ()  in
+        TwitterClient.sharedInstance?.homeTimeline(success: { (tweets: [Tweet])  in
             self.tweets = tweets
             print("In TweetsViewController viewDidLoad")
           //  for tweet in tweets {
           //  print(tweet.text!)
           //  }
-        }, failure: { (error: Error) -> () in
-            print("Failed to get home timeline")
-            //print(error.localizedDescription)
-        })
+        }) { (error: Error) in
+            print(error.localizedDescription)
+        }
+       // }, failure: { (error: Error) -> () in
+      //      print("Failed to get home timeline")
+       //     print(error.localizedDescription)
+      //  })
     }
 
     override func didReceiveMemoryWarning() {
