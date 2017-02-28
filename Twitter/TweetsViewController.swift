@@ -65,6 +65,8 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         
         cell.profileImage.setImageWith((tweet.currentUser?.profileUrl)!)
         
+        cell.tweet = tweet
+        
         let replyImage = UIImage(named: "reply-icon.png")
         cell.replyButton.setImage(replyImage, for: .normal)
         

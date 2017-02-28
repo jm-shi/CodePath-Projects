@@ -42,49 +42,67 @@ class TweetCell: UITableViewCell {
     }
     
     @IBAction func onRetweet(_ sender: Any) {
-        print("Tweet id is")
-        print(self.tweet?.tweetID)
+        let theTweetID = self.tweet!.tweetID
         
-        TwitterClient.sharedInstance?.retweet(id: self.tweet!.tweetID, success: {
-            print("Success")
-            self.tweet?.retweetCount = (self.tweet?.retweetCount)! + 1
-        }, failure: { (error) in
-            print("Error")
-        })
-        
-        if didRetweet {
+        if (self.tweet?.didRetweet)! {
+            TwitterClient.sharedInstance?.unretweet(id: theTweetID, success: {
+                print("Success, unretweeted")
+                self.tweet?.retweetCount = (self.tweet?.retweetCount)! - 1
+                self.numRetweets.text = String(self.tweet!.retweetCount)
+            }, failure: { (error) in
+                print("Error with unretweeting")
+            })
+            
             let retweetImage = UIImage(named: "retweet-icon.png")
             retweetButton.setImage(retweetImage, for: .normal)
-            retweetCount = retweetCount - 1
-            didRetweet = false
+            self.tweet?.didRetweet = false
         }
         else {
+            TwitterClient.sharedInstance?.retweet(id: theTweetID, success: {
+                print("Success, retweeted")
+                self.tweet?.retweetCount = (self.tweet?.retweetCount)! + 1
+                self.numRetweets.text = String(self.tweet!.retweetCount)
+                
+            }, failure: { (error) in
+                print("Error with tweeting")
+            })
+            
             let retweetImage = UIImage(named: "retweet-icon-green")
             retweetButton.setImage(retweetImage, for: .normal)
-            retweetCount = retweetCount + 1
-            didRetweet = true
+            self.tweet?.didRetweet = true
         }
         
-        //numRetweets.text = String(retweetCount)
     }
     
     @IBAction func onLike(_ sender: Any) {
-        print("Like button pressed")
+        let theTweetID = self.tweet!.tweetID
         
-        if didFavorite {
+        if (self.tweet?.didFavorite)! {
+            TwitterClient.sharedInstance?.unfavorite(id: theTweetID, success: {
+                print("Success, unfavorited")
+                self.tweet?.favoritesCount = (self.tweet?.favoritesCount)! - 1
+                self.numLikes.text = String(self.tweet!.favoritesCount)
+            }, failure: { (error) in
+                print("Error with unfavoriting")
+            })
+            
             let favImage = UIImage(named: "favor-icon.png")
             likeButton.setImage(favImage, for: .normal)
-            favoritesCount = favoritesCount - 1
-            didFavorite = false
+            self.tweet?.didFavorite = false
         }
         else {
-            let favImage = UIImage(named: "favor-icon-red")
+            TwitterClient.sharedInstance?.favorite(id: theTweetID, success: {
+                print("Success, favorited")
+                self.tweet?.favoritesCount = (self.tweet?.favoritesCount)! + 1
+                self.numLikes.text = String(self.tweet!.favoritesCount)
+            }, failure: { (error) in
+                print("Error with favoriting")
+            })
+            
+            let favImage = UIImage(named: "favor-icon-red.png")
             likeButton.setImage(favImage, for: .normal)
-            favoritesCount = favoritesCount + 1
-            didFavorite = true
+            self.tweet?.didFavorite = true
         }
-        
-        numLikes.text = String(favoritesCount)
     }
 
 }
