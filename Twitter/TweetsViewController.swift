@@ -12,25 +12,28 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("test")
         tableView.dataSource = self
         tableView.delegate = self
         tableView.estimatedRowHeight = 120
         
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 0.53, green: 0.79, blue: 0.99, alpha: 0.9)
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+        
+        let titleTextColor: NSDictionary = [NSForegroundColorAttributeName: UIColor.white]
+        self.navigationController?.navigationBar.titleTextAttributes = titleTextColor as? [String : Any]
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
+        tableView.insertSubview(refreshControl, at: 0)
         
         TwitterClient.sharedInstance?.homeTimeline(success: { (tweets: [Tweet])  in
             self.tweets = tweets
-            
-          //  for tweet in tweets {
-          //      print(tweet.text!)
-          //  }
-            
             self.tableView.reloadData()
         }) { (error: Error) in
             print(error.localizedDescription)
         }
-
+        
+        getHomeTimeline()
     }
 
     override func didReceiveMemoryWarning() {
@@ -45,6 +48,21 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UserDidLogout"), object: nil)
     }
 
+    func refreshControlAction(_ refreshControl: UIRefreshControl) {
+        getHomeTimeline()
+        refreshControl.endRefreshing()
+    }
+    
+    func getHomeTimeline() {
+        TwitterClient.sharedInstance?.homeTimeline(success: { (tweets: [Tweet])  in
+            self.tweets = tweets
+            self.tableView.reloadData()
+        }) { (error: Error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    // MARK: UITableViewDelegate and UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tweets != nil {
             return tweets.count

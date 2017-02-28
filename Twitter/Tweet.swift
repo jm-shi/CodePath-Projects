@@ -54,29 +54,35 @@ class Tweet: NSObject {
             
             timeSince = Int(Date().timeIntervalSince(timestamp!))
             if (timeSince < minute) {
-                timeSinceAsString = String(timeSince) + "s"
+                timeSinceAsString = String(timeSince) + "s ago"
             }
             else if (timeSince < hour) {
-                timeSinceAsString = String(timeSince/minute) + "m"
+                timeSinceAsString = String(timeSince/minute) + "m ago"
             }
             else if (timeSince < day) {
                 if (timeSince/hour == 1) {
-                    timeSinceAsString = String(timeSince/hour) + "hr"
+                    timeSinceAsString = String(timeSince/hour) + "hr ago"
                 }
                 else {
-                    timeSinceAsString = String(timeSince/hour) + "hrs"
+                    timeSinceAsString = String(timeSince/hour) + "hrs ago"
                 }
             }
             else {
-                if (timeSince/day == 1) {
-                    timeSinceAsString = String(timeSince/day) + "day"
+                let numDaysAgo = timeSince/day
+                if (numDaysAgo == 1) {
+                    timeSinceAsString = String(timeSince/day) + "day ago"
                 }
                 else {
-                    timeSinceAsString = String(timeSince/day) + "days"
+                    if (numDaysAgo < 365) {
+                        timeSinceAsString = String(timeSince/day) + "days ago"
+                    }
+                    else {
+                        let numYearsAgo = numDaysAgo/365
+                        timeSinceAsString = String(numYearsAgo) + "years ago"
+                    }
                 }
             }
         }
-
     }
     
     class func tweetsWithArray(dictionaries: [NSDictionary]) -> [Tweet] {
@@ -89,7 +95,5 @@ class Tweet: NSObject {
         
         return tweets
     }
-    
-    
     
 }
