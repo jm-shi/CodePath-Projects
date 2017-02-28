@@ -6,7 +6,7 @@
 import UIKit
 
 class TweetCell: UITableViewCell {
-
+    
     @IBOutlet weak var profileImage: UIImageView!
     
     @IBOutlet weak var nameLabel: UILabel!
@@ -18,6 +18,7 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var retweetButton: UIButton!
     @IBOutlet weak var likeButton: UIButton!
     
+    @IBOutlet weak var numReplies: UILabel!
     @IBOutlet weak var numRetweets: UILabel!
     @IBOutlet weak var numLikes: UILabel!
     
@@ -26,17 +27,7 @@ class TweetCell: UITableViewCell {
     var didRetweet: Bool = false
     var didFavorite: Bool = false
     
-    var tweet: Tweet! {
-        print("TweetCell")
-        //get {
-            retweetCount = self.tweet.retweetCount
-            favoritesCount = self.tweet.favoritesCount
-            didRetweet = self.tweet.didRetweet
-            didFavorite = self.tweet.didFavorite
-            print("retweet count \(retweetCount)")
-        //}
-        return self.tweet
-    }
+    var tweet: Tweet?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -51,9 +42,18 @@ class TweetCell: UITableViewCell {
     }
     
     @IBAction func onRetweet(_ sender: Any) {
-        print("Retweet pressed")
+        print("Tweet id is")
+        print(self.tweet?.tweetID)
+        
+        TwitterClient.sharedInstance?.retweet(id: self.tweet!.tweetID, success: {
+            print("Success")
+            self.tweet?.retweetCount = (self.tweet?.retweetCount)! + 1
+        }, failure: { (error) in
+            print("Error")
+        })
+        
         if didRetweet {
-            let retweetImage = UIImage(named: "retweet-icon")
+            let retweetImage = UIImage(named: "retweet-icon.png")
             retweetButton.setImage(retweetImage, for: .normal)
             retweetCount = retweetCount - 1
             didRetweet = false
@@ -65,14 +65,14 @@ class TweetCell: UITableViewCell {
             didRetweet = true
         }
         
-        numRetweets.text = String(retweetCount)
+        //numRetweets.text = String(retweetCount)
     }
     
     @IBAction func onLike(_ sender: Any) {
         print("Like button pressed")
         
         if didFavorite {
-            let favImage = UIImage(named: "favor-icon")
+            let favImage = UIImage(named: "favor-icon.png")
             likeButton.setImage(favImage, for: .normal)
             favoritesCount = favoritesCount - 1
             didFavorite = false

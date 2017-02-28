@@ -4,7 +4,6 @@
 //
 
 import UIKit
-import AFNetworking
 
 class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -13,10 +12,12 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print("test")
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.estimatedRowHeight = 100
+        tableView.estimatedRowHeight = 120
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: 0.53, green: 0.79, blue: 0.99, alpha: 0.9)
         
         TwitterClient.sharedInstance?.homeTimeline(success: { (tweets: [Tweet])  in
             self.tweets = tweets
@@ -57,31 +58,34 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "tweetCell", for: indexPath) as! TweetCell
 
+        cell.backgroundColor = UIColor.white
+        cell.selectionStyle = .none
+        
         let tweet = tweets[indexPath.row]
         
         cell.profileImage.setImageWith((tweet.currentUser?.profileUrl)!)
         
-        let replyImage = UIImage(named: "reply-icon")
+        let replyImage = UIImage(named: "reply-icon.png")
         cell.replyButton.setImage(replyImage, for: .normal)
         
         if tweet.didRetweet {
-            let retweetImage = UIImage(named: "retweet-icon-green")
+            let retweetImage = UIImage(named: "retweet-icon-green.png")
             cell.retweetButton.setImage(retweetImage, for: .normal)
             tweet.didRetweet = true
         }
         else {
-            let retweetImage = UIImage(named: "retweet-icon")
+            let retweetImage = UIImage(named: "retweet-icon.png")
             cell.retweetButton.setImage(retweetImage, for: .normal)
             tweet.didRetweet = false
         }
         
         if tweet.didFavorite {
-            let favImage = UIImage(named: "favor-icon-red")
+            let favImage = UIImage(named: "favor-icon-red.png")
             cell.likeButton.setImage(favImage, for: .normal)
             tweet.didFavorite = true
         }
         else {
-            let favImage = UIImage(named: "favor-icon")
+            let favImage = UIImage(named: "favor-icon.png")
             cell.likeButton.setImage(favImage, for: .normal)
             tweet.didFavorite = false
         }

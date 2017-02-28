@@ -13,10 +13,13 @@ class Tweet: NSObject {
     var username: String?
     var timestamp: Date?
     
+    var tweetID: Int = 0
     var retweetCount: Int = 0
     var favoritesCount: Int = 0
     var didRetweet: Bool
     var didFavorite: Bool
+    var retweetCountAsString: String?
+    var favoritesCountAsString: String?
     
     var timeSince: Int = 0
     var timeSinceAsString: String?
@@ -24,22 +27,6 @@ class Tweet: NSObject {
     let minute: Int = 60
     let hour: Int = 3600
     let day: Int = 86400
-    
-    func getRetweetCount() -> Int {
-        return retweetCount
-    }
-    
-    func getFavoritesCount() -> Int {
-        return favoritesCount
-    }
-    
-    func getRetweetStatus() -> Bool {
-        return didRetweet
-    }
-    
-    func getFavoriteStatus() -> Bool {
-        return didFavorite
-    }
     
     init(dictionary: NSDictionary)
     {
@@ -49,8 +36,13 @@ class Tweet: NSObject {
         
         text = dictionary["text"] as? String
         
+        tweetID = dictionary["id"] as! Int
+        print("The id is \(tweetID)")
+        
         retweetCount = (dictionary["retweet_count"] as? Int) ?? 0
-        favoritesCount = (dictionary["favourites_count"] as? Int) ?? 0
+        favoritesCount = (dictionary["favorite_count"] as? Int) ?? 0
+        retweetCountAsString = String(retweetCount)
+        favoritesCountAsString = String(favoritesCount)
         
         didRetweet = dictionary["retweeted"] as! Bool
         didFavorite = dictionary["favorited"] as! Bool
@@ -98,5 +90,7 @@ class Tweet: NSObject {
         
         return tweets
     }
+    
+    
     
 }

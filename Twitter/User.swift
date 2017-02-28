@@ -33,6 +33,7 @@ class User: NSObject {
     
     class var currentUser: User? {
         get {
+            print("get current user")
             // Check if data exists in current user data
             // If so, turn it back into a user and store it into current user
             if _currentUser == nil {
@@ -48,6 +49,7 @@ class User: NSObject {
             return _currentUser
         }
         set(user) {
+            print("set current user")
             _currentUser = user
             
             let defaults = UserDefaults.standard

@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		84053CD71E6402ED008D0445 /* TweetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84053CD61E6402ED008D0445 /* TweetCell.swift */; };
+		84053CD91E64FE7D008D0445 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8423C9831E61650C00212650 /* Main.storyboard */; };
 		8423C9801E61650C00212650 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8423C97F1E61650C00212650 /* AppDelegate.swift */; };
-		8423C9851E61650C00212650 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8423C9831E61650C00212650 /* Main.storyboard */; };
 		8423C9871E61650C00212650 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8423C9861E61650C00212650 /* Assets.xcassets */; };
 		8423C98A1E61650C00212650 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8423C9881E61650C00212650 /* LaunchScreen.storyboard */; };
 		8423C9951E61650C00212650 /* TwitterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8423C9941E61650C00212650 /* TwitterTests.swift */; };
@@ -328,9 +328,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84053CD91E64FE7D008D0445 /* Main.storyboard in Resources */,
 				8423C98A1E61650C00212650 /* LaunchScreen.storyboard in Resources */,
 				8423C9871E61650C00212650 /* Assets.xcassets in Resources */,
-				8423C9851E61650C00212650 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
