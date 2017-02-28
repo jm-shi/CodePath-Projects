@@ -37,7 +37,6 @@ class Tweet: NSObject {
         text = dictionary["text"] as? String
         
         tweetID = dictionary["id"] as! Int
-        print("The id is \(tweetID)")
         
         retweetCount = (dictionary["retweet_count"] as? Int) ?? 0
         favoritesCount = (dictionary["favorite_count"] as? Int) ?? 0

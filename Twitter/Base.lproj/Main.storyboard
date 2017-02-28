@@ -44,7 +44,7 @@
             </objects>
             <point key="canvasLocation" x="116.25" y="123.59154929577466"/>
         </scene>
-        <!--Tweets View Controller-->
+        <!--Home-->
         <scene sceneID="tv4-Sp-COD">
             <objects>
                 <viewController id="HqK-lE-git" customClass="TweetsViewController" customModule="Twitter" customModuleProvider="target" sceneMemberID="viewController">
@@ -191,7 +191,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="sHg-LD-tQH">
+                    <navigationItem key="navigationItem" title="Home" id="sHg-LD-tQH">
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="5LB-yw-bJd">
                             <userDefinedRuntimeAttributes>
                                 <userDefinedRuntimeAttribute type="color" keyPath="textColor">
