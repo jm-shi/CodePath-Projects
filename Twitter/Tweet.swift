@@ -23,6 +23,7 @@ class Tweet: NSObject {
     
     var timeSince: Int = 0
     var timeSinceAsString: String?
+    var detailsTimeAsString: String?
     
     let minute: Int = 60
     let hour: Int = 3600
@@ -52,7 +53,11 @@ class Tweet: NSObject {
             formatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
             timestamp = formatter.date(from: timestampString) as Date?
             
+            formatter.dateFormat = "h:mm a - d MMM y"
+            detailsTimeAsString = formatter.string(from: timestamp!);
+            
             timeSince = Int(Date().timeIntervalSince(timestamp!))
+
             if (timeSince < minute) {
                 timeSinceAsString = String(timeSince) + "s ago"
             }
