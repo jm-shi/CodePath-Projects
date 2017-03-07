@@ -34,11 +34,11 @@ class ComposeViewController: UIViewController {
     }
     
     func onTweet() {
-     //   let tweetText = tweetTextView.text
-     //   let paramsDictionary: NSDictionary = NSDictionary(dictionary: ["status": tweetText!])
-     //   TwitterClient.sharedInstance?.composeTweet(tweetText: tweetText!, params: paramsDictionary, completion: { (error) in
-     //       print(error?.localizedDescription ?? "")
-     //   })
+        let tweetText = tweetTextView.text
+        let paramsDictionary: NSDictionary = NSDictionary(dictionary: ["status": tweetText!])
+        TwitterClient.sharedInstance?.composeTweet(tweetText: tweetText!, params: paramsDictionary, completion: { (error) in
+            print(error?.localizedDescription ?? "")
+        })
         _ = navigationController?.popViewController(animated: true)
     }
     
