@@ -63,6 +63,16 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
+    func composeTweet(tweetText: String, params: NSDictionary?, completion: @escaping (_ error: Error?) -> ()) {
+        self.post("1.1/statuses/update.json", parameters: params, progress: nil, success: { (operation: URLSessionDataTask!, response: Any?) -> Void in
+            print("Tweeted")
+            completion(nil)
+        }, failure: { (operation: URLSessionDataTask?, error: Error?) -> Void in
+            print("Could not compose tweet")
+            completion(error as Error?)
+        })
+    }
+    
     func retweet(id: Int, success: @escaping () -> (),
                  failure: @escaping (Error) -> ()) {
         self.post("https://api.twitter.com/1.1/statuses/retweet/\(id).json", parameters: nil, progress:

@@ -126,7 +126,6 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "profileSegue" {
-            print("To profile page")
             if let button = sender as? UIButton {
                 let cell = button.superview?.superview as! UITableViewCell
                 let indexPath = self.tableView.indexPath(for: cell)
@@ -135,8 +134,11 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
                 profileViewController.tweet = tweet
             }
         }
+        else if segue.identifier == "composeSegue" {
+            let composeViewController = segue.destination as! ComposeViewController
+            composeViewController.user = User.currentUser
+        }
         else if segue.identifier == "detailsSegue" {
-            print("To tweet details page")
             let cell = sender as! UITableViewCell
             let indexPath = tableView.indexPath(for: cell)
             
