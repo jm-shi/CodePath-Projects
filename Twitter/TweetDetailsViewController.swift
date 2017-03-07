@@ -124,7 +124,6 @@ class TweetDetailsViewController: UIViewController {
         
     }
     
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "profileSegue" {
             let profileViewController = segue.destination as! ProfileViewController
