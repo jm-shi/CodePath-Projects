@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
         )
         
+        // A user is logged in
         if PFUser.current() != nil {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "homeScreen")

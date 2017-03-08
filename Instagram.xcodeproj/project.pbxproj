@@ -16,6 +16,9 @@
 		845727961E6FCF19002BD360 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845727951E6FCF19002BD360 /* ProfileViewController.swift */; };
 		845727981E6FCF24002BD360 /* CaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845727971E6FCF24002BD360 /* CaptureViewController.swift */; };
 		8457279A1E6FCF2C002BD360 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845727991E6FCF2C002BD360 /* HomeViewController.swift */; };
+		8457279D1E6FE99F002BD360 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8457279C1E6FE99F002BD360 /* PhotoCell.swift */; };
+		845727A01E6FED30002BD360 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8457279F1E6FED30002BD360 /* Post.swift */; };
+		845727A21E6FF637002BD360 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 845727A11E6FF637002BD360 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +35,9 @@
 		845727951E6FCF19002BD360 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		845727971E6FCF24002BD360 /* CaptureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptureViewController.swift; sourceTree = "<group>"; };
 		845727991E6FCF2C002BD360 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		8457279C1E6FE99F002BD360 /* PhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
+		8457279F1E6FED30002BD360 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		845727A11E6FF637002BD360 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +63,7 @@
 		845727741E6FBE83002BD360 = {
 			isa = PBXGroup;
 			children = (
+				845727A11E6FF637002BD360 /* Default-568h@2x.png */,
 				8457277F1E6FBE84002BD360 /* Instagram */,
 				8457277E1E6FBE84002BD360 /* Products */,
 				B5B4711E508ECFB769B19CE4 /* Pods */,
@@ -75,6 +82,8 @@
 		8457277F1E6FBE84002BD360 /* Instagram */ = {
 			isa = PBXGroup;
 			children = (
+				8457279E1E6FED1D002BD360 /* Models */,
+				8457279B1E6FE98D002BD360 /* Cells */,
 				845727921E6FC339002BD360 /* View Controllers */,
 				845727801E6FBE84002BD360 /* AppDelegate.swift */,
 				845727841E6FBE84002BD360 /* Main.storyboard */,
@@ -94,6 +103,22 @@
 				845727991E6FCF2C002BD360 /* HomeViewController.swift */,
 			);
 			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		8457279B1E6FE98D002BD360 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				8457279C1E6FE99F002BD360 /* PhotoCell.swift */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		8457279E1E6FED1D002BD360 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8457279F1E6FED30002BD360 /* Post.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		B5B4711E508ECFB769B19CE4 /* Pods */ = {
@@ -168,6 +193,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8457278B1E6FBE84002BD360 /* LaunchScreen.storyboard in Resources */,
+				845727A21E6FF637002BD360 /* Default-568h@2x.png in Resources */,
 				845727881E6FBE84002BD360 /* Assets.xcassets in Resources */,
 				845727861E6FBE84002BD360 /* Main.storyboard in Resources */,
 			);
@@ -232,6 +258,8 @@
 				845727961E6FCF19002BD360 /* ProfileViewController.swift in Sources */,
 				845727981E6FCF24002BD360 /* CaptureViewController.swift in Sources */,
 				845727941E6FC34D002BD360 /* LoginViewController.swift in Sources */,
+				8457279D1E6FE99F002BD360 /* PhotoCell.swift in Sources */,
+				845727A01E6FED30002BD360 /* Post.swift in Sources */,
 				845727811E6FBE84002BD360 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
