@@ -11,6 +11,7 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var captionTextField: UITextField!
     @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet weak var addImageLabel: UILabel!
     
     let imagePicker = UIImagePickerController()
     
@@ -32,6 +33,13 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             photoImageView.image = pickedImage
+            
+            if self.photoImageView.image != nil {
+                self.addImageLabel.isHidden = true
+            }
+            else {
+                self.addImageLabel.isHidden = false
+            }
         }
         dismiss(animated: true, completion: nil)
     }
@@ -73,6 +81,7 @@ class CaptureViewController: UIViewController, UIImagePickerControllerDelegate, 
                 self.tabBarController?.selectedIndex = 0
                 self.photoImageView.image = nil
                 self.captionTextField.text = ""
+                self.addImageLabel.isHidden = false
             }
             else {
                 print(error?.localizedDescription ?? "Error submitting photo")

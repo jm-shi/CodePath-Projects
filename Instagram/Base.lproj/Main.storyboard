@@ -35,7 +35,7 @@
                             <constraint firstItem="bZH-rE-68Y" firstAttribute="centerX" secondItem="3NQ-fl-c9Z" secondAttribute="centerX" id="aVe-UA-C3y"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Profile" id="uCg-RN-9UQ"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="profile-Icon" id="uCg-RN-9UQ"/>
                     <connections>
                         <outlet property="logoutButton" destination="bZH-rE-68Y" id="24i-6e-1dh"/>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="backToLoginSegue" id="F8J-cQ-nJB"/>
@@ -76,21 +76,35 @@
                                     <constraint firstAttribute="height" constant="315" id="xwL-gd-pFB"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add an image" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0yh-7N-xQV">
+                                <rect key="frame" x="25" y="39" width="271" height="315"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="315" id="ErT-Zd-0TR"/>
+                                    <constraint firstAttribute="width" constant="271" id="O6b-sS-2g3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="EeS-t2-FGn" secondAttribute="trailing" constant="24" id="AOi-Vp-Ejh"/>
                             <constraint firstAttribute="trailing" secondItem="I6g-Lo-ewh" secondAttribute="trailing" constant="24" id="IIe-Yu-HyI"/>
+                            <constraint firstItem="0yh-7N-xQV" firstAttribute="top" secondItem="rPa-kW-eRq" secondAttribute="bottom" constant="19" id="Qxp-9m-AfT"/>
                             <constraint firstItem="rW8-R0-fha" firstAttribute="top" secondItem="rPa-kW-eRq" secondAttribute="bottom" constant="19" id="Uf7-DY-ixJ"/>
+                            <constraint firstItem="0yh-7N-xQV" firstAttribute="leading" secondItem="f8y-EP-mbl" secondAttribute="leading" constant="25" id="WrE-3j-BER"/>
                             <constraint firstItem="EeS-t2-FGn" firstAttribute="leading" secondItem="f8y-EP-mbl" secondAttribute="leading" constant="25" id="a7j-ne-BxU"/>
                             <constraint firstAttribute="trailing" secondItem="rW8-R0-fha" secondAttribute="trailing" constant="24" id="aeY-bc-LnN"/>
                             <constraint firstItem="I6g-Lo-ewh" firstAttribute="top" secondItem="EeS-t2-FGn" secondAttribute="bottom" constant="8" id="bjV-oG-pUY"/>
+                            <constraint firstAttribute="trailing" secondItem="0yh-7N-xQV" secondAttribute="trailing" constant="24" id="f2e-pt-sNO"/>
                             <constraint firstItem="rW8-R0-fha" firstAttribute="leading" secondItem="f8y-EP-mbl" secondAttribute="leading" constant="25" id="hnU-FU-Ufa"/>
                             <constraint firstItem="EeS-t2-FGn" firstAttribute="top" secondItem="rW8-R0-fha" secondAttribute="bottom" constant="22" id="ncp-bv-wuC"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Capture" id="f8G-Mo-Wq0"/>
+                    <tabBarItem key="tabBarItem" title="Capture" image="camera-icon" id="f8G-Mo-Wq0"/>
                     <connections>
+                        <outlet property="addImageLabel" destination="0yh-7N-xQV" id="OZ2-tK-Jt6"/>
                         <outlet property="captionTextField" destination="EeS-t2-FGn" id="OiC-Dp-8n0"/>
                         <outlet property="photoImageView" destination="rW8-R0-fha" id="4bv-Ud-1E1"/>
                         <outlet property="submitButton" destination="I6g-Lo-ewh" id="N5N-NR-gEE"/>
@@ -183,7 +197,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="290"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="g5z-tv-g0p" id="V6H-Zu-7hI">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="289"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="289.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fFv-r7-K6h" customClass="PFImageView">
@@ -225,7 +239,7 @@
                             <constraint firstItem="eUx-MY-2TR" firstAttribute="top" secondItem="qAv-Dt-Xfq" secondAttribute="top" constant="20" id="Tyf-W0-R0l"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Home" id="oDa-cg-1AO"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="home-icon" id="oDa-cg-1AO"/>
                     <connections>
                         <outlet property="tableView" destination="eUx-MY-2TR" id="HsL-Wi-BbI"/>
                     </connections>
@@ -255,4 +269,9 @@
             <point key="canvasLocation" x="313" y="123"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="camera-icon" width="30" height="23"/>
+        <image name="home-icon" width="30" height="30"/>
+        <image name="profile-Icon" width="26" height="26"/>
+    </resources>
 </document>
