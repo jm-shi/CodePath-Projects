@@ -37,7 +37,7 @@ class LoginViewController: UIViewController {
         
         newUser.signUpInBackground { (success: Bool, error: Error?) -> Void in
             if success {
-                print("Created a user")
+                print("Successfully created a user")
                 self.performSegue(withIdentifier: "loginSegue", sender: nil)
             }
             else {

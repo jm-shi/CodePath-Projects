@@ -11,14 +11,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         Parse.initialize(
             with: ParseClientConfiguration(block: { (configuration:ParseMutableClientConfiguration) -> Void in
                 configuration.applicationId = "Instagram"
-                configuration.clientKey = "asdf09749"  // set to nil assuming you have not set clientKey
+                configuration.clientKey = "asdf09749"
                 configuration.server = "https://stormy-scrubland-94823.herokuapp.com/parse"
             })
         )

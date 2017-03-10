@@ -32,6 +32,7 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
         }
         
+        Timer.scheduledTimer(timeInterval: 0, target: self, selector: #selector(HomeViewController.onTimer), userInfo: nil, repeats: false)
         refreshEveryFiveSeconds()
     }
 
