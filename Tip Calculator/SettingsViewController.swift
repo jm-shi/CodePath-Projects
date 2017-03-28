@@ -20,9 +20,13 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var tipSlider: UISlider!
     @IBOutlet weak var tipSliderLabel: UILabel!
     
+    @IBOutlet weak var stepper: UIStepper!
+    @IBOutlet weak var stepperLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.tintColor = UIColor.red
+        self.navigationController?.navigationBar.tintColor = UIColor.red;
         
         // Load default tip percentage for segmented control
         let tipIndex = defaults.integer(forKey: "defaultTipIndex")
@@ -33,7 +37,6 @@ class SettingsViewController: UIViewController {
         tipSlider.value = Float(tipPercent * 100)
         tipSliderLabel.text = defaults.string(forKey: "tipSliderLabelText") ?? "5%"
 
-        
         let controlSwitchIsOn = defaults.bool(forKey: "useControl")
         if controlSwitchIsOn {
             controlSwitch.isOn = true
@@ -44,6 +47,15 @@ class SettingsViewController: UIViewController {
             sliderSwitch.isOn = true
         }
         
+        let stepValue = defaults.double(forKey: "stepValue")
+        if stepValue == 0 {
+            stepper.value = 5
+            stepperLabel.text = "5"
+        }
+        else {
+            stepper.value = stepValue
+            stepperLabel.text = String(Int(stepValue))
+        }
     }
     
     // Update tip percentage upon modifying segmented control
@@ -60,8 +72,10 @@ class SettingsViewController: UIViewController {
     // Precondition: slider is switched on
     @IBAction func changeTipValWithSlider(_ sender: Any) {
         var tipPercentage = Int(tipSlider.value)
-        tipPercentage = tipPercentage - tipPercentage % 5
+        let stepSize = defaults.double(forKey: "stepValue")
+        tipPercentage = tipPercentage - tipPercentage % Int(stepSize)
         let tipPercentAsDouble = Double(tipPercentage)/100
+        
         defaults.set(tipPercentAsDouble, forKey: "defaultTipPercent")
         tipSliderLabel.text = String(describing: tipPercentage) + "%"
         defaults.set(tipSliderLabel.text, forKey: "tipSliderLabelText")
@@ -78,6 +92,7 @@ class SettingsViewController: UIViewController {
             sliderSwitch.isOn = false
         }
         defaults.set(controlSwitch.isOn, forKey: "useControl")
+        defaults.synchronize()
     }
     
     @IBAction func onSliderSwitch(_ sender: Any) {
@@ -90,6 +105,14 @@ class SettingsViewController: UIViewController {
             controlSwitch.isOn = false
         }
         defaults.set(controlSwitch.isOn, forKey: "useControl")
+        defaults.synchronize()
+    }
+    
+    
+    @IBAction func onStep(_ sender: Any) {
+        stepperLabel.text = String(Int(stepper.value))
+        defaults.set(stepper.value, forKey: "stepValue")
+        defaults.synchronize()
     }
     
 }

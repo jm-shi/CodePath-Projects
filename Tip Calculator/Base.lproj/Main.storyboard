@@ -172,6 +172,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Tipper" id="BdZ-Rm-ptl">
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="ScR-22-5fd">
+                            <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <segue destination="xTo-cf-NDk" kind="push" id="mQM-h8-hzl"/>
                             </connections>
@@ -274,26 +275,52 @@
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minimumValue="1" maximumValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="xpC-p2-JvV">
+                                <rect key="frame" x="25" y="348" width="94" height="29"/>
+                                <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="onStep:" destination="xTo-cf-NDk" eventType="valueChanged" id="Wyj-sF-GTU"/>
+                                </connections>
+                            </stepper>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Slider step size" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qFe-Jg-NUT">
+                                <rect key="frame" x="25" y="319" width="116" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2t0-cW-rwf">
+                                <rect key="frame" x="156" y="351" width="10.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="edL-aq-kTG" firstAttribute="leading" secondItem="xc8-U0-AC0" secondAttribute="leading" id="0lh-1b-4PF"/>
                             <constraint firstAttribute="bottom" secondItem="edL-aq-kTG" secondAttribute="bottom" id="1cU-fU-IBT"/>
                             <constraint firstItem="Azr-4J-2TI" firstAttribute="top" secondItem="xc8-U0-AC0" secondAttribute="top" constant="-50" id="5PX-SD-IPB"/>
+                            <constraint firstItem="2t0-cW-rwf" firstAttribute="top" secondItem="tBO-sd-5b7" secondAttribute="bottom" constant="62" id="5Ys-9H-B6r"/>
                             <constraint firstItem="tBO-sd-5b7" firstAttribute="top" secondItem="ygo-g7-s3r" secondAttribute="bottom" constant="10" id="6wP-od-zNp"/>
                             <constraint firstAttribute="trailing" secondItem="Azr-4J-2TI" secondAttribute="trailing" id="8S2-h1-UkB"/>
                             <constraint firstItem="3uZ-ss-0Ce" firstAttribute="leading" secondItem="xc8-U0-AC0" secondAttribute="leading" constant="25" id="8Wx-OR-3PW"/>
                             <constraint firstAttribute="trailing" secondItem="tBO-sd-5b7" secondAttribute="trailing" constant="15" id="8x4-HQ-eg8"/>
                             <constraint firstItem="3uZ-ss-0Ce" firstAttribute="top" secondItem="1au-WG-nlc" secondAttribute="bottom" constant="35" id="AmF-lx-JZC"/>
                             <constraint firstItem="edL-aq-kTG" firstAttribute="top" secondItem="1au-WG-nlc" secondAttribute="bottom" id="HIg-uE-Dl2"/>
+                            <constraint firstItem="xpC-p2-JvV" firstAttribute="top" secondItem="qFe-Jg-NUT" secondAttribute="bottom" constant="8" id="K2m-2r-2yP"/>
+                            <constraint firstItem="qFe-Jg-NUT" firstAttribute="top" secondItem="tBO-sd-5b7" secondAttribute="bottom" constant="30" id="Ke9-tA-a1V"/>
+                            <constraint firstItem="2t0-cW-rwf" firstAttribute="leading" secondItem="xpC-p2-JvV" secondAttribute="trailing" constant="37" id="LaN-Wd-fg5"/>
                             <constraint firstItem="47Q-Ed-5QK" firstAttribute="leading" secondItem="xc8-U0-AC0" secondAttribute="leading" constant="15" id="Ork-rj-hR3"/>
                             <constraint firstItem="9jX-16-9lg" firstAttribute="leading" secondItem="xc8-U0-AC0" secondAttribute="leading" constant="25" id="RC0-KB-bMV"/>
                             <constraint firstItem="ygo-g7-s3r" firstAttribute="top" secondItem="47Q-Ed-5QK" secondAttribute="bottom" constant="45" id="TAS-xE-lmo"/>
                             <constraint firstItem="463-r6-brT" firstAttribute="top" secondItem="1au-WG-nlc" secondAttribute="bottom" constant="30" id="Xo8-h1-0mH"/>
                             <constraint firstItem="sgT-zN-ZkW" firstAttribute="top" secondItem="tBO-sd-5b7" secondAttribute="bottom" constant="5" id="XuC-Rc-J3K"/>
                             <constraint firstAttribute="trailing" secondItem="ygo-g7-s3r" secondAttribute="trailing" constant="25" id="bHq-ZS-9I2"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="2t0-cW-rwf" secondAttribute="trailing" constant="25" id="cjD-KX-iWQ"/>
                             <constraint firstAttribute="trailing" secondItem="463-r6-brT" secondAttribute="trailing" constant="25" id="dhf-4Q-yhz"/>
                             <constraint firstItem="47Q-Ed-5QK" firstAttribute="top" secondItem="463-r6-brT" secondAttribute="bottom" constant="20" id="h6y-zY-jwJ"/>
+                            <constraint firstItem="qFe-Jg-NUT" firstAttribute="leading" secondItem="xc8-U0-AC0" secondAttribute="leading" constant="25" id="j8b-P7-y6g"/>
+                            <constraint firstItem="xpC-p2-JvV" firstAttribute="leading" secondItem="xc8-U0-AC0" secondAttribute="leading" constant="25" id="jkz-g8-0bI"/>
                             <constraint firstItem="Azr-4J-2TI" firstAttribute="leading" secondItem="xc8-U0-AC0" secondAttribute="leading" id="lpS-ag-0Bb"/>
                             <constraint firstAttribute="trailing" secondItem="47Q-Ed-5QK" secondAttribute="trailing" constant="15" id="mdP-59-MSI"/>
                             <constraint firstAttribute="trailing" secondItem="edL-aq-kTG" secondAttribute="trailing" id="p7i-3Z-nhW"/>
@@ -306,6 +333,8 @@
                     <connections>
                         <outlet property="controlSwitch" destination="463-r6-brT" id="pPL-Su-Cc8"/>
                         <outlet property="sliderSwitch" destination="ygo-g7-s3r" id="psN-d8-Oxv"/>
+                        <outlet property="stepper" destination="xpC-p2-JvV" id="0ck-FH-7R4"/>
+                        <outlet property="stepperLabel" destination="2t0-cW-rwf" id="dTY-Fs-6cJ"/>
                         <outlet property="tipControl" destination="47Q-Ed-5QK" id="zVK-GP-Qlq"/>
                         <outlet property="tipSlider" destination="tBO-sd-5b7" id="NYy-fn-z7U"/>
                         <outlet property="tipSliderLabel" destination="sgT-zN-ZkW" id="wfP-V7-UNK"/>

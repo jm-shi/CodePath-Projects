@@ -17,14 +17,15 @@ The following **optional** features are implemented:
 * [x] Making sure the keyboard is always visible and the bill amount is always the first responder. This way the user doesn't have to tap anywhere to use this app. Just launch the app and start typing.
 
 The following **additional** features are implemented:
-- [x] Added option to split the bill with up to 30 people.
-- [x] Added option to use a slider to decide the tip percentage.
+- [x] Split the bill with up to 30 people.
+- [x] Use a slider to decide the tip percentage.
+- [x] Manually modify the slider's step size.
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/mAu0MgH.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/WnRe3W4.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 

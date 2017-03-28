@@ -125,7 +125,6 @@ class ViewController: UIViewController {
     }
     
     func modifyResults(tipIndex: Int, bill: Double, useSlider: Bool) {
-        
         var tip = 0.0
         
         if !useSlider {
@@ -185,8 +184,10 @@ class ViewController: UIViewController {
     @IBAction func calculateTipWithSlider(_ sender: Any) {
         let tipIndex = tipControl.selectedSegmentIndex
         toRelevantScreen()
+        
         var tipPercentage = Int(tipSlider.value)
-        tipPercentage = tipPercentage - tipPercentage % 5
+        let stepSize = defaults.double(forKey: "stepValue")
+        tipPercentage = tipPercentage - tipPercentage % Int(stepSize)
         tipSliderLabel.text = String(tipPercentage) + "%"
         
         defaults.set(Double(tipPercentage)/100, forKey: "defaultTipPercent")
