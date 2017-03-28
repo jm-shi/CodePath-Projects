@@ -2,9 +2,7 @@
 
 "TipCalculator" is a tip calculator application for iOS.
 
-Submitted by: Jamie S
-
-Time spent: ~10 hours spent in total
+Submitted by: Jamie Shi
 
 ## User Stories
 
@@ -14,28 +12,25 @@ The following **required** functionality is complete:
 The following **optional** features are implemented:
 * [x] Settings page to change the default tip percentage.
 * [x] UI animations
-* [ ] Remembering the bill amount across app restarts (if <10mins)
-* [ ] Using locale-specific currency and currency thousands separators.
+* [x] Remembering the bill amount across app restarts (if <10mins)
+* [x] Using locale-specific currency and currency thousands separators.
 * [x] Making sure the keyboard is always visible and the bill amount is always the first responder. This way the user doesn't have to tap anywhere to use this app. Just launch the app and start typing.
 
 The following **additional** features are implemented:
-- [x] Created simple app icon
+- [x] Added option to split the bill with up to 30 people.
+- [x] Added option to use a slider to decide the tip percentage.
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/vobmQq0.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/mAu0MgH.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
-## Notes
-
-Loading and saving default tip percentages was the most time-consuming step; I initially had issues with synchronizing the highlighted segment of the segmented control between the main screen and setting screen.
-
 ## License
 
-    Copyright 2016 Jamie S
+    Copyright 2016 Jamie Shi
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
