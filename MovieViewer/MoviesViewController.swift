@@ -14,6 +14,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var networkError: UIView!
     
+    var page: Int = 1
     var endpoint: String!
     var movies: [NSDictionary] = []
     var filteredMovies: [NSDictionary] = []
@@ -98,12 +99,13 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func loadMoreData() {
+        page += 1
         self.networkRequest()
     }
     
     func networkRequest() {
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = URL(string: "https://api.themoviedb.org/3/movie/\(endpoint!)?api_key=\(apiKey)")!
+        let url = URL(string: "https://api.themoviedb.org/3/movie/\(endpoint!)?api_key=\(apiKey)&page=\(page)")!
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
         
         // Configure session so that completion handler is executed on main UI thread
@@ -128,7 +130,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                 let task: URLSessionDataTask = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
                     if let data = data {
                         if let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
-                              self.movies = (dataDictionary["results"] as? [NSDictionary])!
+                              self.movies += (dataDictionary["results"] as? [NSDictionary])!
                               self.tableView.reloadData()
                               MBProgressHUD.hide(for: self.view, animated: true)
                         }
@@ -263,7 +265,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        tableView.reloadData()
+        //tableView.reloadData()
         
         if searchText.isEmpty {
             filteredMovies = movies
