@@ -67,7 +67,6 @@ class ViewController: UIViewController {
             
             if !defaults.bool(forKey: "useControl") {
                 tipSlider.value = Float(defaults.double(forKey: "defaultTipPercent")*100)
-                print("tipslider val is ", tipSlider.value)
                 tipSliderLabel.text = defaults.string(forKey: "tipSliderLabelText")
             }
             
@@ -83,14 +82,18 @@ class ViewController: UIViewController {
     func showControlOrSlider() {
         let useSegmentedControl = self.defaults.bool(forKey: "useControl")
         if useSegmentedControl {
+            self.tipSlider.isEnabled = false
             self.tipSlider.alpha = 0
             self.tipSliderLabel.alpha = 0
             self.tipControl.alpha = 1
+            self.tipControl.isEnabled = true
         }
         else {
+            self.tipSlider.isEnabled = true
             self.tipSlider.alpha = 1
             self.tipSliderLabel.alpha = 1
             self.tipControl.alpha = 0
+            self.tipControl.isEnabled = false
         }
     }
     
