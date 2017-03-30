@@ -38,7 +38,7 @@ The following **optional** features are implemented:
 - [x] Customize the navigation bar.
 
 ## Video Walkthrough 
-<img src='http://i.imgur.com/nrEbxlY.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/y7NL6Aw.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 

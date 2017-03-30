@@ -15,6 +15,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var networkError: UIView!
     
     var page: Int = 1
+    var filterOn: Bool = false
     var endpoint: String!
     var movies: [NSDictionary] = []
     var filteredMovies: [NSDictionary] = []
@@ -25,6 +26,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.tableView.separatorInset = UIEdgeInsets.zero
         
         if let navigationBar = navigationController?.navigationBar {
@@ -112,8 +114,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         // Configure session so that completion handler is executed on main UI thread
         let session = URLSession(
             configuration: URLSessionConfiguration.default,
-            delegate:nil,
-            delegateQueue:OperationQueue.main
+            delegate: nil,
+            delegateQueue: OperationQueue.main
         )
         
         MBProgressHUD.showAdded(to: self.view, animated: true)
@@ -161,7 +163,9 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                 loadingMoreView!.startAnimating()
                 
                 // Load more results
-                loadMoreData()		
+                if !filterOn {
+                    loadMoreData()
+                }
             }
         }
     }
@@ -207,7 +211,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             dateFormatter.dateFormat = "yyyy-MM-dd"
             let formattedDate = dateFormatter.date(from: releaseDate)
             dateFormatter.dateFormat = "MMMM d, yyyy"
-            releaseDate = "Release: " + dateFormatter.string(from: formattedDate!)
+            releaseDate = dateFormatter.string(from: formattedDate!)
             
             overview = movie["overview"] as! String
             
@@ -300,22 +304,26 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         self.searchBar.showsCancelButton = true
+        self.filterOn = true
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.showsCancelButton = false
-        searchBar.text = ""
-        searchBar.resignFirstResponder()
-        networkRequest()
+        self.searchBar.showsCancelButton = false
+        self.searchBar.text = ""
+        self.searchBar.resignFirstResponder()
+        self.filterOn = false
+        self.tableView.reloadData()
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
             filteredMovies = movies
             searchBarEmpty = true;
+            self.filterOn = false
         }
         else {
             searchBarEmpty = false;
+            self.filterOn = true
             filteredMovies = movies.filter({ (movie: NSDictionary) -> Bool in
                 if let title = movie["title"] as? String {
                     return title.range(of: searchText, options: .caseInsensitive) != nil
