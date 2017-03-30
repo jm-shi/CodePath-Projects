@@ -183,7 +183,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         cell.backgroundColor = UIColor.black
         cell.selectionStyle = .none
-
+        
         let movie = movies[indexPath.row]
         
         let lowResBaseUrl = "https://image.tmdb.org/t/p/w45"
@@ -197,7 +197,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             overview = movie["overview"] as! String
             if let posterPath = movie["poster_path"] as? String {
                 cell.titleLabel.text = title
-                cell.overviewLabel.text = overview
+                cell.overviewTextView.text = overview
                 fadeInDetails(lowResBaseUrl + posterPath, highResImageUrl: highResBaseUrl + posterPath, title: title, overview: overview, cellForRowAt: indexPath, cell: cell)
             }
         }
@@ -210,6 +210,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             }
         }
         
+        cell.overviewTextView.scrollRangeToVisible(NSRange(location: 0, length: 0))
         return cell
     }
     
@@ -220,7 +221,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let highResImageRequest = NSURLRequest(url: NSURL(string: highResImageUrl)! as URL)
 
         cell.titleLabel.text = title
-        cell.overviewLabel.text = overview
+        cell.overviewTextView.text = overview
         
         cell.posterView.setImageWith(lowResImageRequest as URLRequest, placeholderImage: nil, success: { (lowResImageRequest, lowResImageResponse, lowResImage) -> Void in
             
@@ -265,8 +266,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        //tableView.reloadData()
-        
         if searchText.isEmpty {
             filteredMovies = movies
             searchBarEmpty = true;
@@ -280,8 +279,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                 return false
             })
         }
-        
-        //movies = filteredMovies
         tableView.reloadData()
     }
     
