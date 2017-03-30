@@ -21,29 +21,30 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     var isMoreDataLoading = false
     var searchBarEmpty = true;
     var loadingMoreView:InfiniteScrollActivityView?
+    let darkBrown = UIColor(red: 0.1, green: 0.07, blue: 0.02, alpha: 1.0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.separatorInset = UIEdgeInsets.zero
-
+        
         if let navigationBar = navigationController?.navigationBar {
-            navigationBar.barTintColor = UIColor.black
+            navigationBar.barTintColor = darkBrown
             navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.orange]
             navigationBar.tintColor = UIColor.orange
         }
         if let tabBar = tabBarController?.tabBar {
-            tabBar.barTintColor = UIColor.black
+            tabBar.barTintColor = darkBrown
             tabBar.tintColor = UIColor.orange
         }
         
-        tableView.backgroundColor = UIColor.black
+        tableView.backgroundColor = darkBrown
         
-        searchBar.barTintColor = UIColor.black
+        searchBar.barTintColor = darkBrown
         searchBar.tintColor = .orange
-        searchBar.backgroundColor = UIColor.black
+        searchBar.backgroundColor = darkBrown
         let searchTextField = searchBar.value(forKey: "_searchField") as? UITextField
-        searchTextField?.backgroundColor = UIColor.orange
-        searchTextField?.textColor = UIColor.black
+        searchTextField?.backgroundColor = UIColor(red: 0.76, green: 0.47, blue: 0.36, alpha: 1.0)
+        searchTextField?.textColor = darkBrown
         
         // Set up Infinite Scroll loading indicator
         let frame = CGRect(x: 0, y: tableView.contentSize.height, width: tableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
@@ -181,7 +182,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
         
-        cell.backgroundColor = UIColor.black
+        cell.backgroundColor = darkBrown
         cell.selectionStyle = .none
         
         let movie = movies[indexPath.row]
@@ -190,23 +191,48 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let highResBaseUrl = "https://image.tmdb.org/t/p/w500"
         
         var title: String
+        var rating: String
+        var releaseDate: String
         var overview: String
         
         if (searchBar.text?.isEmpty)! {
             title = movie["title"] as! String
+            
+            let voteAverage = Float(String(describing: movie["vote_average"]!))!
+            let voteAverageRounded = String(format: "%.1f", arguments: [voteAverage])
+            rating = voteAverageRounded
+            
+            releaseDate = String(describing: movie["release_date"]!)
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let formattedDate = dateFormatter.date(from: releaseDate)
+            dateFormatter.dateFormat = "MMMM d, yyyy"
+            releaseDate = "Release: " + dateFormatter.string(from: formattedDate!)
+            
             overview = movie["overview"] as! String
+            
             if let posterPath = movie["poster_path"] as? String {
                 cell.titleLabel.text = title
+                cell.ratingLabel.text = rating
+                cell.releaseDateLabel.text = releaseDate
                 cell.overviewTextView.text = overview
-                fadeInDetails(lowResBaseUrl + posterPath, highResImageUrl: highResBaseUrl + posterPath, title: title, overview: overview, cellForRowAt: indexPath, cell: cell)
+                fadeInDetails(lowResBaseUrl + posterPath, highResImageUrl: highResBaseUrl + posterPath, title: title, rating: rating, releaseDate: releaseDate, overview: overview, cellForRowAt: indexPath, cell: cell)
             }
         }
         else {
             let filteredMovie = filteredMovies[indexPath.row]
             title = filteredMovie["title"] as! String
+            
+            let voteAverage = Float(String(describing: movie["vote_average"]!))!
+            let voteAverageRounded = String(format: "%.1f", arguments: [voteAverage])
+            rating = voteAverageRounded
+            
+            releaseDate = String(describing: movie["release_date"]!)
+            
             overview = filteredMovie["overview"] as! String
+            
             if let posterPath = filteredMovie["poster_path"] as? String {
-               fadeInDetails(lowResBaseUrl + posterPath, highResImageUrl: highResBaseUrl + posterPath, title: title, overview: overview, cellForRowAt: indexPath, cell: cell)
+                fadeInDetails(lowResBaseUrl + posterPath, highResImageUrl: highResBaseUrl + posterPath, title: title, rating: rating, releaseDate: releaseDate, overview: overview, cellForRowAt: indexPath, cell: cell)
             }
         }
         
@@ -216,12 +242,30 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     // Fade in title, overview, and image loaded from network
     // Load low resolution image first, then switch to high resolution image
-    func fadeInDetails(_ lowResImageUrl: String, highResImageUrl: String, title: String, overview: String, cellForRowAt indexPath: IndexPath, cell: MovieCell) {
+    func fadeInDetails(_ lowResImageUrl: String, highResImageUrl: String, title: String, rating: String, releaseDate: String, overview: String, cellForRowAt indexPath: IndexPath, cell: MovieCell) {
         let lowResImageRequest = NSURLRequest(url: NSURL(string: lowResImageUrl)! as URL)
         let highResImageRequest = NSURLRequest(url: NSURL(string: highResImageUrl)! as URL)
 
         cell.titleLabel.text = title
+        cell.ratingLabel.text = rating + "/10"
         cell.overviewTextView.text = overview
+        cell.releaseDateLabel.text = releaseDate
+        
+        if Double(rating) == 0.0 {
+            cell.ratingLabel.layer.backgroundColor = UIColor.gray.cgColor
+            cell.ratingLabel.text = "Unrated"
+        }
+        else if Double(rating)! >= 7.0 {
+            cell.ratingLabel.layer.backgroundColor = UIColor.green.cgColor
+        }
+        else if Double(rating)! >= 6.0 {
+            cell.ratingLabel.layer.backgroundColor = UIColor.yellow.cgColor
+        }
+        else {
+            cell.ratingLabel.layer.backgroundColor = UIColor.red.cgColor
+        }
+        
+        cell.ratingLabel.layer.cornerRadius = 3
         
         cell.posterView.setImageWith(lowResImageRequest as URLRequest, placeholderImage: nil, success: { (lowResImageRequest, lowResImageResponse, lowResImage) -> Void in
             
