@@ -39,7 +39,7 @@ The following **optional** features are implemented:
 
 ## Video Walkthrough 
 
-[Link to GIF Walkthrough](http://i.imgur.com/y7NL6Aw.gif')
+[Link to GIF Walkthrough](http://i.imgur.com/y7NL6Aw.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
