@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import MapKit
+import CoreLocation
 
-class Business: NSObject {
+class Business: NSObject, MKAnnotation {
     let name: String?
     let address: String?
     let imageURL: URL?
@@ -16,11 +18,21 @@ class Business: NSObject {
     let distance: String?
     let ratingImageURL: URL?
     let reviewCount: NSNumber?
+    let location: CLLocation?
+    var coordinate: CLLocationCoordinate2D
+    var title: String?
+    var subtitle: String?
     
     init(dictionary: NSDictionary) {
         name = dictionary["name"] as? String
         
-        let imageURLString = dictionary["image_url"] as? String
+        var imageURLString = dictionary["image_url"] as? String
+        
+        let endIndex = imageURLString?.index((imageURLString?.endIndex)!, offsetBy: -6)
+        var truncatedString = imageURLString?.substring(to: endIndex!)
+        truncatedString = truncatedString! + "l.jpg"
+        imageURLString = truncatedString!
+        
         if imageURLString != nil {
             imageURL = URL(string: imageURLString!)!
         } else {
@@ -43,8 +55,17 @@ class Business: NSObject {
                 address += neighborhoods![0] as! String
             }
         }
-        self.address = address
         
+        let coordinate = location?["coordinate"] as? NSDictionary
+        let latitude = coordinate?["latitude"] as? Double
+        let longitude = coordinate?["longitude"] as? Double
+        self.location = CLLocation(latitude: latitude!, longitude: longitude!)
+        self.coordinate = CLLocationCoordinate2D(latitude: (self.location?.coordinate.latitude)!, longitude: (self.location?.coordinate.longitude)!)
+        
+        self.address = address
+        self.title = self.name
+        self.subtitle = self.address
+
         let categoriesArray = dictionary["categories"] as? [[String]]
         if categoriesArray != nil {
             var categoryNames = [String]()

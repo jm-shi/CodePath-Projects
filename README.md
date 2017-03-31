@@ -14,14 +14,14 @@ The following **optional** features are implemented:
 
 - [x] Search results page
 - [x] Infinite scroll for restaurant results.
-- [ ] Implement map view of restaurant results.
-- [ ] Implement the restaurant detail page.
+- [x] Implement map view of restaurant results.
+- [x] Implement the restaurant detail page.
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/SzMQzzs.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/llANQdl.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 

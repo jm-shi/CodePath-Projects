@@ -12,6 +12,7 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
 
     // MARK: Properties
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var mapButton: UIBarButtonItem!
     
     var searchWord = ""
     var searchBar = UISearchBar()
@@ -23,7 +24,7 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
     
     var theOffset = 0
     var isMoreDataLoading = false
-    var doFilterByRestaurants = true
+    var doFilterByBusinesses = true
     
     // MARK: viewDidLoad
     override func viewDidLoad() {
@@ -34,14 +35,15 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.estimatedRowHeight = 120
+        self.tableView.estimatedRowHeight = 250
     
         self.searchBar.delegate = self
-        self.searchBar.placeholder = "Restaurants"
+        self.searchBar.placeholder = "Businesses"
         self.searchBar.tintColor = UIColor.white
         
         self.navigationItem.titleView = self.searchBar
-        self.navigationItem.leftBarButtonItem = filterButton
+        self.navigationItem.leftBarButtonItem = self.filterButton
+        self.navigationItem.rightBarButtonItem = self.mapButton
         
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 0.74, green: 0.15, blue: 0.15, alpha: 0.9)
         
@@ -49,27 +51,14 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
         self.filterButton.tintColor = UIColor.white
         self.navigationItem.leftBarButtonItem = self.filterButton
         
-        resetSearch()
+        self.mapButton.tintColor = UIColor.white
         
-        /* Example of Yelp search with more search options specified
-         Business.searchWithTerm("Restaurants", sort: .Distance, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in
-         self.businesses = businesses
-         
-         for business in businesses {
-         print(business.name!)
-         print(business.address!)
-         }
-         }
-         */
+        resetSearch()
     }
     
     // MARK: Miscellaeneous
     func resetSearch() {
         Business.searchWithTerm(term: searchWord, offset: theOffset, categories: nil, completion: { (businesses: [Business]?, error: Error?) -> Void in
-        
-         //let filteredCategory = ["Parks"]
-         //self.filteredCategories = filteredCategory
-         
          self.theOffset += 20
          self.businesses = businesses
          self.tableView.reloadData()
@@ -98,13 +87,13 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func swapFilterType() {
-        if (doFilterByRestaurants) {
-            self.doFilterByRestaurants = false
+        if (doFilterByBusinesses) {
+            self.doFilterByBusinesses = false
             self.searchBar.placeholder = "Categories"
             
         }
         else {
-            self.doFilterByRestaurants = true
+            self.doFilterByBusinesses = true
             self.searchBar.placeholder = "Restaurants"
         }
         self.tableView.reloadData()
@@ -153,7 +142,7 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
             self.filteredCategories = []
         }
         else {
-            if (doFilterByRestaurants) {
+            if (doFilterByBusinesses) {
                 filteredBusinesses = businesses.filter({ (business: Business) -> Bool in
                     if let name = business.name {
                         return name.range(of: searchWord, options: .caseInsensitive) != nil
@@ -193,11 +182,23 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
      // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     /*  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }*/
+       override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "mapSegue" {
+            if let mapVC = segue.destination as? MapViewController {
+                mapVC.businesses = self.businesses
+            }
+        }
+        if segue.identifier == "detailsSegue" {
+            if let detailsVC = segue.destination as? DetailsViewController {
+                if (searchBar.text?.isEmpty)! {
+                    detailsVC.business = self.businesses[(self.tableView.indexPathForSelectedRow?.row)!]
+                }
+                else {
+                    detailsVC.business = self.filteredBusinesses[(self.tableView.indexPathForSelectedRow?.row)!]
+                }
+            }
+            
+        }
+     }
     
 }
