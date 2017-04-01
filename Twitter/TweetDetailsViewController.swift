@@ -55,11 +55,6 @@ class TweetDetailsViewController: UIViewController {
         favoritesCountLabel.text = self.tweet?.favoritesCountAsString
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     @IBAction func onRetweet(_ sender: Any) {
         let theTweetID = self.tweet!.tweetID
         

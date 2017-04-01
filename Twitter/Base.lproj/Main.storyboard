@@ -22,12 +22,37 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aLT-pU-W6L">
-                                <rect key="frame" x="77" y="351" width="167" height="72"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Log in with Twitter">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login-background" translatesAutoresizingMaskIntoConstraints="NO" id="Xb5-BM-PHc">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TwitterLogoWhite" translatesAutoresizingMaskIntoConstraints="NO" id="gNq-W1-yyA">
+                                <rect key="frame" x="125" y="70" width="70" height="70"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="70" id="1ch-Es-pmf"/>
+                                    <constraint firstAttribute="height" constant="70" id="Vqv-W0-Ytr"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Twitter." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cxz-NJ-9CJ">
+                                <rect key="frame" x="72" y="311" width="177" height="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get real-time updates about what matters to you." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Urd-5y-kcC">
+                                <rect key="frame" x="35" y="360" width="250" height="48"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aLT-pU-W6L">
+                                <rect key="frame" x="45" y="463" width="230" height="50"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Lbn-Zk-KVQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
+                                <state key="normal" title="Log in">
+                                    <color key="titleColor" red="0.14901960780000001" green="0.63921568630000003" blue="0.95294117649999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="onLoginButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Na6-fQ-jx9"/>
@@ -35,6 +60,22 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="aLT-pU-W6L" secondAttribute="trailing" constant="45" id="Flz-QE-cbl"/>
+                            <constraint firstItem="Xb5-BM-PHc" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="IbC-Zi-nga"/>
+                            <constraint firstAttribute="trailing" secondItem="Xb5-BM-PHc" secondAttribute="trailing" id="Oi3-Qj-sdM"/>
+                            <constraint firstItem="Xb5-BM-PHc" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="P7U-Eq-cfa"/>
+                            <constraint firstItem="Urd-5y-kcC" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="35" id="RQG-Yk-AYF"/>
+                            <constraint firstAttribute="trailing" secondItem="Urd-5y-kcC" secondAttribute="trailing" constant="35" id="daI-SK-Gcu"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="aLT-pU-W6L" secondAttribute="bottom" constant="55" id="e3B-5L-0nm"/>
+                            <constraint firstItem="gNq-W1-yyA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="h3E-r9-2MY"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Xb5-BM-PHc" secondAttribute="bottom" id="htu-bC-elC"/>
+                            <constraint firstItem="Urd-5y-kcC" firstAttribute="top" secondItem="cxz-NJ-9CJ" secondAttribute="bottom" constant="25" id="lDF-gp-JFw"/>
+                            <constraint firstItem="gNq-W1-yyA" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="50" id="t5w-RW-apD"/>
+                            <constraint firstItem="aLT-pU-W6L" firstAttribute="top" secondItem="Urd-5y-kcC" secondAttribute="bottom" constant="55" id="u6S-3s-0yU"/>
+                            <constraint firstItem="cxz-NJ-9CJ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="vJk-v8-okx"/>
+                            <constraint firstItem="aLT-pU-W6L" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="45" id="ydx-3r-4fk"/>
+                        </constraints>
                     </view>
                     <connections>
                         <segue destination="0kM-ox-Vf9" kind="presentation" identifier="loginSegue" id="7fy-oh-bun"/>
@@ -210,11 +251,6 @@
                     <navigationItem key="navigationItem" title="Home" id="sHg-LD-tQH">
                         <barButtonItem key="backBarButtonItem" title="Back" id="hnx-CQ-024"/>
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="5LB-yw-bJd">
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="color" keyPath="textColor">
-                                    <color key="value" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="onLogoutButton:" destination="HqK-lE-git" id="Bxu-LA-P3m"/>
                             </connections>
@@ -636,13 +672,15 @@
     </scenes>
     <resources>
         <image name="TwitterLogo" width="120" height="120"/>
+        <image name="TwitterLogoWhite" width="200" height="200"/>
         <image name="edit-icon" width="30" height="27"/>
         <image name="favor-icon" width="30" height="30"/>
+        <image name="login-background" width="288" height="512"/>
         <image name="reply-icon" width="30" height="30"/>
         <image name="retweet-icon" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="02o-H4-Lkt"/>
+        <segue reference="kOq-QT-1kv"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
 </document>

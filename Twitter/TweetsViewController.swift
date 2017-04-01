@@ -9,6 +9,9 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
 
     // MARK: Properties
     var tweets: [Tweet]!
+    var loadingMoreView: InfiniteScrollActivityView?
+    var isMoreDataLoading = false
+    
     @IBOutlet weak var tableView: UITableView!
     
     // MARK: viewDidLoad
@@ -16,7 +19,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.estimatedRowHeight = 120
+        tableView.estimatedRowHeight = 70
         
         self.navigationController?.navigationBar.barTintColor = UIColor(red: 0.53, green: 0.79, blue: 0.99, alpha: 0.9)
         self.navigationController?.navigationBar.tintColor = UIColor.white
@@ -28,19 +31,22 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
         tableView.insertSubview(refreshControl, at: 0)
         
-        TwitterClient.sharedInstance?.homeTimeline(success: { (tweets: [Tweet])  in
+        // Set up Infinite Scroll loading indicator
+        let frame = CGRect(x: 0, y: tableView.contentSize.height, width: tableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
+        loadingMoreView = InfiniteScrollActivityView(frame: frame)
+        loadingMoreView!.isHidden = true
+        tableView.addSubview(loadingMoreView!)
+        
+        var insets = tableView.contentInset
+        insets.bottom += InfiniteScrollActivityView.defaultHeight
+        tableView.contentInset = insets
+        
+        TwitterClient.sharedInstance?.homeTimeline(max_id: 0, success: { (tweets: [Tweet])  in
             self.tweets = tweets
             self.tableView.reloadData()
         }) { (error: Error) in
             print(error.localizedDescription)
         }
-        
-        getHomeTimeline()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction func onLogoutButton(_ sender: Any) {
@@ -51,13 +57,36 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     }
 
     func refreshControlAction(_ refreshControl: UIRefreshControl) {
-        getHomeTimeline()
+        loadMoreTweets(lastTweetID: 0)
         refreshControl.endRefreshing()
     }
     
-    func getHomeTimeline() {
-        TwitterClient.sharedInstance?.homeTimeline(success: { (tweets: [Tweet])  in
-            self.tweets = tweets
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (!isMoreDataLoading) {
+            // Calculate the position of one screen length before the bottom of the results
+            let scrollViewContentHeight = tableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
+            
+            // When the user has scrolled past the threshold, start requesting
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.isDragging) {
+                isMoreDataLoading = true
+                
+                // Update position of loadingMoreView, and start loading indicator
+                let frame = CGRect(x: 0, y: tableView.contentSize.height, width: tableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight)
+                loadingMoreView?.frame = frame
+                loadingMoreView!.startAnimating()
+                
+                // Load more tweets
+                let lastTweetID = tweets[tweets.endIndex-1].tweetID-1
+                loadMoreTweets(lastTweetID: lastTweetID)
+            }
+        }
+    }
+    
+    func loadMoreTweets(lastTweetID: Int) {
+        TwitterClient.sharedInstance?.homeTimeline(max_id: lastTweetID, success: { (tweets: [Tweet])  in
+            self.isMoreDataLoading = false
+            self.tweets.append(contentsOf: tweets)
             self.tableView.reloadData()
         }) { (error: Error) in
             print(error.localizedDescription)
@@ -91,7 +120,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         cell.replyButton.setImage(replyImage, for: .normal)
         
         if tweet.didRetweet {
-            let retweetImage = UIImage(named: "retweet-icon-green.png")
+            let retweetImage = UIImage(named: "retweet-icon.png")
             cell.retweetButton.setImage(retweetImage, for: .normal)
             tweet.didRetweet = true
         }

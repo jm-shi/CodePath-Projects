@@ -53,8 +53,14 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
-    func homeTimeline(success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
-        get("1.1/statuses/home_timeline.json", parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response: Any?) -> Void in
+    func homeTimeline(max_id: Int, success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
+        
+        var link = "1.1/statuses/home_timeline.json"
+        if max_id != 0 {
+            link = link + "?max_id=\(max_id)"
+        }
+        
+        get(link, parameters: nil, progress: nil, success: { (task: URLSessionDataTask, response: Any?) -> Void in
             let dictionaries = response as! [NSDictionary]
             let tweets = Tweet.tweetsWithArray(dictionaries: dictionaries)
             success(tweets)
