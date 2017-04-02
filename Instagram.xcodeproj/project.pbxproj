@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		33FFCD865833EE3BA260D548 /* Pods_Instagram.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43163966BFD3A1A89D2E50F4 /* Pods_Instagram.framework */; };
+		84231AD71E905A3D00F6A895 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84231AD61E905A3D00F6A895 /* TabBarController.swift */; };
 		845727811E6FBE84002BD360 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845727801E6FBE84002BD360 /* AppDelegate.swift */; };
 		845727861E6FBE84002BD360 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 845727841E6FBE84002BD360 /* Main.storyboard */; };
 		845727881E6FBE84002BD360 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 845727871E6FBE84002BD360 /* Assets.xcassets */; };
@@ -25,6 +26,7 @@
 		43163966BFD3A1A89D2E50F4 /* Pods_Instagram.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Instagram.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		462CF63A8D6CB2D316C07C25 /* Pods-Instagram.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Instagram.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Instagram/Pods-Instagram.debug.xcconfig"; sourceTree = "<group>"; };
 		70BAECE5E73FD02A6484F202 /* Pods-Instagram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Instagram.release.xcconfig"; path = "Pods/Target Support Files/Pods-Instagram/Pods-Instagram.release.xcconfig"; sourceTree = "<group>"; };
+		84231AD61E905A3D00F6A895 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		8457277D1E6FBE84002BD360 /* Instagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Instagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		845727801E6FBE84002BD360 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		845727851E6FBE84002BD360 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				845727951E6FCF19002BD360 /* ProfileViewController.swift */,
 				845727971E6FCF24002BD360 /* CaptureViewController.swift */,
 				845727991E6FCF2C002BD360 /* HomeViewController.swift */,
+				84231AD61E905A3D00F6A895 /* TabBarController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -255,6 +258,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8457279A1E6FCF2C002BD360 /* HomeViewController.swift in Sources */,
+				84231AD71E905A3D00F6A895 /* TabBarController.swift in Sources */,
 				845727961E6FCF19002BD360 /* ProfileViewController.swift in Sources */,
 				845727981E6FCF24002BD360 /* CaptureViewController.swift in Sources */,
 				845727941E6FC34D002BD360 /* LoginViewController.swift in Sources */,

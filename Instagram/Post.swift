@@ -8,14 +8,6 @@ import Parse
 
 class Post: NSObject {
 
-    var image: UIImage?
-    var caption: String?
-    
-    init(image: UIImage, caption: String) {
-        self.image = image
-        self.caption = caption
-    }
-    
     /**
      Method to add a user post to Parse (uploading image file)
      - parameter image: Image that the user wants upload to parse
@@ -32,7 +24,7 @@ class Post: NSObject {
         post["caption"] = caption
         post["likesCount"] = 0
         post["commentsCount"] = 0
-        
+                
         // Save object (following function will save the object in Parse asynchronously)
         post.saveInBackground(block: completion)
     }

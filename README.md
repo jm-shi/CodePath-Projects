@@ -14,18 +14,18 @@ The following **required** functionality is completed:
 
 The following **optional** features are implemented:
 
-- [ ] Show the username and creation time for each post
-- [ ] After the user submits a new post, show a progress HUD while the post is being uploaded to Parse.
-- [ ] User Profiles:
-- [ ] Allow the logged in user to add a profile photo
-- [ ] Display the profile photo with each post
+- [x] Show the username and creation time for each post
+- [x] After the user submits a new post, show a progress HUD while the post is being uploaded to Parse.
+- [x] User Profiles:
+- [x] Allow the logged in user to add a profile photo
+- [x] Display the profile photo with each post
 - [ ] Tapping on a post's username or profile photo goes to that user's profile page
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-[Link to GIF Walkthrough](http://i.imgur.com/2J1ISc1.gif)
+[Link to GIF Walkthrough](http://i.imgur.com/3PsUEJs.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
