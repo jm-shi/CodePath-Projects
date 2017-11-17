@@ -6,6 +6,8 @@ target 'Flix' do
   use_frameworks!
 
   # Pods for Flix
-  pod 'Alamofire', '~> 3.3'
+  pod 'Alamofire', '~> 4.5'
+  pod 'AlamofireImage', '~> 3.3'
+  pod 'SVProgressHUD'
 
 end
