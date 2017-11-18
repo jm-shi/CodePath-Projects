@@ -63,15 +63,26 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
         return cell
     }
     
-
-    /*
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        let vc = segue.destination as! PhotoDetailsViewController
+ 
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPath(for: cell)
+        
+        let post = posts[(indexPath?.row)!]
+        let photos = post["photos"] as? [[String: Any]]
+        let photo = photos?[0]
+        let originalSize = photo?["original_size"] as! [String: Any]
+        let urlString = originalSize["url"] as! String
+        vc.photoURL = urlString
     }
-    */
+    
 
 }
