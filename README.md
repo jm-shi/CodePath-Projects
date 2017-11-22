@@ -24,11 +24,24 @@ The following **optional** features are implemented:
 - [ ] Customize the navigation bar.
 - [ ] Customize the UI.
 
+## User Stories
+
+The following **required** functionality is completed:
+
+- [x] User can tap a cell to see a detail view
+- [x] User can tap a tab bar button to view a grid layout of Movie Posters using a CollectionView
+
+The following **optional** features are implemented:
+
+- [ ] User can tap a poster in the collection view to see a detail screen of that movie
+- [ ] In the detail view, when the user taps the poster, a new screen is presented modally where they can view the trailer
+- [ ] Customize the navigation bar
+
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://i.imgur.com/UfDpuLV.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://i.imgur.com/sZyQguE.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 

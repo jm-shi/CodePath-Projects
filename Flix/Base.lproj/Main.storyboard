@@ -208,10 +208,10 @@
             </objects>
             <point key="canvasLocation" x="262" y="59"/>
         </scene>
-        <!--View Controller-->
+        <!--Superhero View Controller-->
         <scene sceneID="408-uJ-Suf">
             <objects>
-                <viewController id="clY-u4-HeM" sceneMemberID="viewController">
+                <viewController id="clY-u4-HeM" customClass="SuperheroViewController" customModule="Flix" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wbJ-2Z-TtE"/>
                         <viewControllerLayoutGuide type="bottom" id="YJd-zU-phs"/>
@@ -219,13 +219,58 @@
                     <view key="view" contentMode="scaleToFill" id="ukC-Dh-1VU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ebh-NI-vDM">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="AOj-kv-4Hy">
+                                    <size key="itemSize" width="125" height="190"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PosterCell" id="Mwx-pv-h3w" customClass="PosterCell" customModule="Flix" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="125" height="190"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="125" height="190"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2m8-XT-XCr">
+                                                    <rect key="frame" x="0.0" y="0.0" width="125" height="190"/>
+                                                </imageView>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="2m8-XT-XCr" secondAttribute="trailing" id="B7S-ex-hKK"/>
+                                            <constraint firstItem="2m8-XT-XCr" firstAttribute="top" secondItem="Mwx-pv-h3w" secondAttribute="top" id="XUW-UY-4w7"/>
+                                            <constraint firstItem="2m8-XT-XCr" firstAttribute="leading" secondItem="Mwx-pv-h3w" secondAttribute="leading" id="Yyx-UR-wGi"/>
+                                            <constraint firstAttribute="bottom" secondItem="2m8-XT-XCr" secondAttribute="bottom" id="b4H-RM-qe7"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="posterImageView" destination="2m8-XT-XCr" id="fih-SA-bVM"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ebh-NI-vDM" firstAttribute="top" secondItem="ukC-Dh-1VU" secondAttribute="top" id="FUp-LA-zJc"/>
+                            <constraint firstItem="YJd-zU-phs" firstAttribute="top" secondItem="ebh-NI-vDM" secondAttribute="bottom" id="HN9-J6-V8Z"/>
+                            <constraint firstItem="ebh-NI-vDM" firstAttribute="leading" secondItem="ukC-Dh-1VU" secondAttribute="leading" id="J3N-Xi-6XW"/>
+                            <constraint firstAttribute="trailing" secondItem="ebh-NI-vDM" secondAttribute="trailing" id="leb-mw-wGG"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="dVh-qf-pg9"/>
+                    <connections>
+                        <outlet property="collectionView" destination="ebh-NI-vDM" id="f9H-Hp-xGk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sNp-fn-tqL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="969" y="754"/>
+            <point key="canvasLocation" x="968.79999999999995" y="753.37331334332839"/>
         </scene>
         <!--Superhero-->
         <scene sceneID="bjP-jl-qIc">
