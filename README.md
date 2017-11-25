@@ -49,6 +49,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 - [Alamofire](https://github.com/Alamofire/Alamofire) - networking task library
 - [SVProgressHUD](https://github.com/SVProgressHUD/SVProgressHUD) - displays loading state
+- [Reachability](https://github.com/ashleymills/Reachability.swift) - determines network reachability status
 
 ## License
 
