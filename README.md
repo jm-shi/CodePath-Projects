@@ -16,13 +16,13 @@ The following **optional** features are implemented:
 
 - [x] User sees an error message when there's a networking error.
 - [x] Movies are displayed using a CollectionView instead of a TableView.
-- [ ] User can search for a movie.
+- [x] User can search for a movie.
 - [ ] All images fade in as they are loading.
 - [ ] User can view the large movie poster by tapping on a cell.
 - [ ] For the large poster, load the low resolution image first and then switch to the high resolution image when complete.
-- [ ] Customize the selection effect of the cell.
-- [ ] Customize the navigation bar.
-- [ ] Customize the UI.
+- [x] Customize the selection effect of the cell.
+- [x] Customize the navigation bar.
+- [x] Customize the UI.
 
 ## User Stories
 
@@ -35,13 +35,13 @@ The following **optional** features are implemented:
 
 - [x] User can tap a poster in the collection view to see a detail screen of that movie
 - [x] In the detail view, when the user taps the poster, a new screen is presented modally where they can view the trailer
-- [ ] Customize the navigation bar
+- [x] Customize the navigation bar
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://i.imgur.com/sZyQguE.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://i.imgur.com/9dcO5rX.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 

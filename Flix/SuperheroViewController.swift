@@ -11,15 +11,26 @@ import AlamofireImage
 import SVProgressHUD
 import Reachability
 
-class SuperheroViewController: UIViewController, UICollectionViewDataSource {
+class SuperheroViewController: UIViewController, UICollectionViewDataSource, UISearchBarDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
+    
     var movies: [[String: Any]] = []
     
     var refreshControl: UIRefreshControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let navigationBar = navigationController?.navigationBar {
+            navigationBar.barTintColor = UIColor.black
+            navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+            navigationBar.tintColor = UIColor.white
+        }
+        if let tabBar = tabBarController?.tabBar {
+            tabBar.barTintColor = UIColor.black
+            tabBar.tintColor = UIColor.white
+        }
         
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(SuperheroViewController.didPullToRefresh(_:)), for: .valueChanged)

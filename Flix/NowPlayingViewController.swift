@@ -11,21 +11,43 @@ import AlamofireImage
 import SVProgressHUD
 import Reachability
 
-class NowPlayingViewController: UIViewController, UITableViewDataSource {
-
+class NowPlayingViewController: UIViewController, UITableViewDataSource, UISearchBarDelegate {
+    
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var movies: [[String: Any]] = []
+    var filteredMovies: [[String: Any]] = []
+    
     var refreshControl: UIRefreshControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let navigationBar = navigationController?.navigationBar {
+            navigationBar.barTintColor = UIColor.black
+            navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
+            navigationBar.tintColor = UIColor.white
+        }
+        if let tabBar = tabBarController?.tabBar {
+            tabBar.barTintColor = UIColor.black
+            tabBar.tintColor = UIColor.white
+        }
+        
+        searchBar.barTintColor = UIColor.black
+        searchBar.tintColor = UIColor.black
+        if let searchTextField = searchBar.value(forKey: "_searchField") as? UITextField {
+            searchTextField.backgroundColor = UIColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 1.0)
+            searchTextField.textColor = UIColor.white
+        }
+        tableView.backgroundColor = UIColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 1.0)
         
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(NowPlayingViewController.didPullToRefresh(_:)), for: .valueChanged)
         tableView.insertSubview(refreshControl, at: 0)
         
         tableView.dataSource = self
+        searchBar.delegate = self
         fetchMovies()
     }
     
@@ -74,14 +96,42 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource {
         }
         task.resume()
     }
-
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            filteredMovies = movies
+        }
+        else {
+            filteredMovies = movies.filter({ (movie: [String: Any]) -> Bool in
+                //let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+                if let title = movie["title"] as? String {
+                    return title.range(of: searchText, options: .caseInsensitive) != nil
+                }
+                return false
+            })
+        }
+        tableView.reloadData()
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return movies.count
+        if (searchBar.text?.isEmpty)! {
+            return movies.count
+        }
+        return filteredMovies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
-        let movie = movies[indexPath.row]
+        cell.backgroundColor = UIColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 1.0)
+        
+        var movie: [String: Any]
+        
+        if (searchBar.text?.isEmpty)! {
+            movie = movies[indexPath.row]
+        }
+        else {
+            movie = filteredMovies[indexPath.row]
+        }
         let title = movie["title"] as! String
         let overview = movie["overview"] as! String
         cell.titleLabel.text = title
@@ -90,16 +140,24 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource {
         let baseURLString = "https://image.tmdb.org/t/p/w500/"
         let posterURL = URL(string: baseURLString + posterPathString)!
         cell.posterImageView.af_setImage(withURL: posterURL)
+        
         return cell
     }
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let cell = sender as! UITableViewCell
         if let indexPath = tableView.indexPath(for: cell) {
-            let movie = movies[indexPath.row]
+            tableView.deselectRow(at: indexPath, animated: true)
+            var movie: [String: Any]
+            if (searchBar.text?.isEmpty)! {
+                movie = movies[indexPath.row]
+            }
+            else {
+                movie = filteredMovies[indexPath.row]
+            }
             let detailViewController = segue.destination as! DetailViewController
             detailViewController.movie = movie
         }
     }
-
+    
 }
