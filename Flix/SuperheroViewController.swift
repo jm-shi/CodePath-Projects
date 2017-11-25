@@ -9,6 +9,7 @@
 import UIKit
 import AlamofireImage
 import SVProgressHUD
+import Reachability
 
 class SuperheroViewController: UIViewController, UICollectionViewDataSource {
     
@@ -47,6 +48,25 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource {
     }
     
     func fetchMovies() {
+        let alertController = UIAlertController(title: "Network error", message: "Your Internet connection appears to be offline.", preferredStyle: .alert)
+        let reachability = Reachability()!
+        
+        reachability.whenUnreachable = { _ in
+            print("Not reachable")
+            SVProgressHUD.dismiss()
+            let tryAgainAction = UIAlertAction(title: "Try Again", style: .default) { (action) in
+                self.fetchMovies()
+            }
+            alertController.addAction(tryAgainAction)
+            self.present(alertController, animated: true)
+        }
+        
+        do {
+            try reachability.startNotifier()
+        } catch {
+            print("Unable to start notifier")
+        }
+        
         SVProgressHUD.show()
         
         let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed")!
@@ -73,7 +93,6 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource {
         
     }
     
-    
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PosterCell", for: indexPath) as! PosterCell
         let movie = movies[indexPath.item]
@@ -85,15 +104,13 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource {
         return cell
     }
     
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
+        let cell = sender as! UICollectionViewCell
+        if let indexPath = collectionView.indexPath(for: cell) {
+            let movie = movies[indexPath.item]
+            let detailViewController = segue.destination as! DetailViewController
+            detailViewController.movie = movie
+        }
      }
-     */
     
 }

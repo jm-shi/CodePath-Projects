@@ -121,8 +121,8 @@
                                     <constraint firstAttribute="height" constant="177" id="uRE-hi-x51"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thor: Ragnarok" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TQs-r2-EEQ">
-                                <rect key="frame" x="141" y="340" width="118" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TQs-r2-EEQ">
+                                <rect key="frame" x="141" y="340" width="83.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -134,7 +134,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overview" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oMR-sE-uA0">
-                                <rect key="frame" x="16" y="418" width="343" height="241"/>
+                                <rect key="frame" x="16" y="418" width="343" height="192"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -250,6 +250,7 @@
                                         </constraints>
                                         <connections>
                                             <outlet property="posterImageView" destination="2m8-XT-XCr" id="fih-SA-bVM"/>
+                                            <segue destination="vr5-Lv-NT3" kind="show" id="trW-VO-FNe"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -296,4 +297,7 @@
         <image name="now_playing_tabbar_item" width="21" height="21"/>
         <image name="superhero_tabbar_item" width="21" height="23"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="trW-VO-FNe"/>
+    </inferredMetricsTieBreakers>
 </document>

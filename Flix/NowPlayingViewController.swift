@@ -9,6 +9,7 @@
 import UIKit
 import AlamofireImage
 import SVProgressHUD
+import Reachability
 
 class NowPlayingViewController: UIViewController, UITableViewDataSource {
 
@@ -34,6 +35,25 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource {
     }
     
     func fetchMovies() {
+        let alertController = UIAlertController(title: "Network error", message: "Your Internet connection appears to be offline.", preferredStyle: .alert)
+        let reachability = Reachability()!
+        
+        reachability.whenUnreachable = { _ in
+            print("Not reachable")
+            SVProgressHUD.dismiss()
+            let tryAgainAction = UIAlertAction(title: "Try Again", style: .default) { (action) in
+                self.fetchMovies()
+            }
+            alertController.addAction(tryAgainAction)
+            self.present(alertController, animated: true)
+        }
+        
+        do {
+            try reachability.startNotifier()
+        } catch {
+            print("Unable to start notifier")
+        }
+        
         SVProgressHUD.show()
         
         let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed")!

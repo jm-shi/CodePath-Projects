@@ -59,8 +59,8 @@
 		842F73BA1FC554AB005F967B /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				84FD8BB71FBEB21B0058D70D /* NowPlayingViewController.swift */,
 				842F73BC1FC554DA005F967B /* DetailViewController.swift */,
+				84FD8BB71FBEB21B0058D70D /* NowPlayingViewController.swift */,
 				842F73C01FC56112005F967B /* SuperheroViewController.swift */,
 			);
 			name = ViewControllers;
