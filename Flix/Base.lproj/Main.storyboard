@@ -306,10 +306,10 @@
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="2m8-XT-XCr" secondAttribute="trailing" id="B7S-ex-hKK"/>
-                                            <constraint firstItem="2m8-XT-XCr" firstAttribute="top" secondItem="Mwx-pv-h3w" secondAttribute="top" id="XUW-UY-4w7"/>
-                                            <constraint firstItem="2m8-XT-XCr" firstAttribute="leading" secondItem="Mwx-pv-h3w" secondAttribute="leading" id="Yyx-UR-wGi"/>
-                                            <constraint firstAttribute="bottom" secondItem="2m8-XT-XCr" secondAttribute="bottom" id="b4H-RM-qe7"/>
+                                            <constraint firstAttribute="trailing" secondItem="2m8-XT-XCr" secondAttribute="trailing" id="5EJ-kA-5GW"/>
+                                            <constraint firstAttribute="bottom" secondItem="2m8-XT-XCr" secondAttribute="bottom" id="MDZ-9w-acQ"/>
+                                            <constraint firstItem="2m8-XT-XCr" firstAttribute="top" secondItem="Mwx-pv-h3w" secondAttribute="top" id="Qhd-Z1-qkH"/>
+                                            <constraint firstItem="2m8-XT-XCr" firstAttribute="leading" secondItem="Mwx-pv-h3w" secondAttribute="leading" id="dCp-VZ-C1E"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="posterImageView" destination="2m8-XT-XCr" id="fih-SA-bVM"/>
@@ -361,6 +361,6 @@
         <image name="superhero_tabbar_item" width="21" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="hmM-fn-9rd"/>
+        <segue reference="trW-VO-FNe"/>
     </inferredMetricsTieBreakers>
 </document>
