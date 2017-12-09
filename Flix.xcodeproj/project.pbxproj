@@ -12,6 +12,8 @@
 		842F73BF1FC56091005F967B /* PosterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842F73BE1FC56091005F967B /* PosterCell.swift */; };
 		842F73C11FC56112005F967B /* SuperheroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842F73C01FC56112005F967B /* SuperheroViewController.swift */; };
 		844D92AE1FC8EE6000F487E2 /* TrailerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844D92AD1FC8EE6000F487E2 /* TrailerViewController.swift */; };
+		84C60A841FDC711400FF8BE6 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C60A831FDC711400FF8BE6 /* Movie.swift */; };
+		84C60A861FDC7CFA00FF8BE6 /* MovieApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C60A851FDC7CFA00FF8BE6 /* MovieApiManager.swift */; };
 		84FD8BA61FBEAA720058D70D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FD8BA51FBEAA720058D70D /* AppDelegate.swift */; };
 		84FD8BAB1FBEAA720058D70D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84FD8BA91FBEAA720058D70D /* Main.storyboard */; };
 		84FD8BAD1FBEAA720058D70D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84FD8BAC1FBEAA720058D70D /* Assets.xcassets */; };
@@ -26,6 +28,8 @@
 		842F73BE1FC56091005F967B /* PosterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PosterCell.swift; sourceTree = "<group>"; };
 		842F73C01FC56112005F967B /* SuperheroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuperheroViewController.swift; sourceTree = "<group>"; };
 		844D92AD1FC8EE6000F487E2 /* TrailerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrailerViewController.swift; sourceTree = "<group>"; };
+		84C60A831FDC711400FF8BE6 /* Movie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		84C60A851FDC7CFA00FF8BE6 /* MovieApiManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieApiManager.swift; sourceTree = "<group>"; };
 		84FD8BA21FBEAA720058D70D /* Flix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84FD8BA51FBEAA720058D70D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84FD8BAA1FBEAA720058D70D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -78,6 +82,15 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		84C60A871FDC8F5700FF8BE6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				84C60A831FDC711400FF8BE6 /* Movie.swift */,
+				84C60A851FDC7CFA00FF8BE6 /* MovieApiManager.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		84FD8B991FBEAA710058D70D = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +112,7 @@
 		84FD8BA41FBEAA720058D70D /* Flix */ = {
 			isa = PBXGroup;
 			children = (
+				84C60A871FDC8F5700FF8BE6 /* Models */,
 				842F73BB1FC554B4005F967B /* Views */,
 				842F73BA1FC554AB005F967B /* ViewControllers */,
 				84FD8BA51FBEAA720058D70D /* AppDelegate.swift */,
@@ -245,9 +259,11 @@
 				84FD8BB81FBEB21B0058D70D /* NowPlayingViewController.swift in Sources */,
 				842F73BF1FC56091005F967B /* PosterCell.swift in Sources */,
 				844D92AE1FC8EE6000F487E2 /* TrailerViewController.swift in Sources */,
+				84C60A861FDC7CFA00FF8BE6 /* MovieApiManager.swift in Sources */,
 				842F73C11FC56112005F967B /* SuperheroViewController.swift in Sources */,
 				84FD8BA61FBEAA720058D70D /* AppDelegate.swift in Sources */,
 				84FD8BBA1FBEB7360058D70D /* MovieCell.swift in Sources */,
+				84C60A841FDC711400FF8BE6 /* Movie.swift in Sources */,
 				842F73BD1FC554DA005F967B /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

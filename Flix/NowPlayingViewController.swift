@@ -15,11 +15,13 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource, UISearc
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var movieTypeBarButtonItem: UIBarButtonItem!
     
-    var movies: [[String: Any]] = []
-    var filteredMovies: [[String: Any]] = []
+    var movies: [Movie] = []
+    var filteredMovies: [Movie] = []
     
     var refreshControl: UIRefreshControl!
+    var showNowPlayingMovies = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +53,17 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource, UISearc
         fetchMovies()
     }
     
+    @IBAction func onMovieType(_ sender: Any) {
+        if (showNowPlayingMovies) {
+            movieTypeBarButtonItem.title = "Popular"
+        }
+        else {
+            movieTypeBarButtonItem.title = "Now Playing"
+        }
+        showNowPlayingMovies = !showNowPlayingMovies
+        
+        fetchMovies()
+    }
     
     func didPullToRefresh(_ refreshControl: UIRefreshControl) {
         fetchMovies()
@@ -78,23 +91,26 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource, UISearc
         
         SVProgressHUD.show()
         
-        let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=fbd72556c509fc83d2efb12b935571d4")!
-        let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
-        let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
-        let task = session.dataTask(with: request) { (data, response, error) in
-            // This will run when the network request returns
-            if let error = error {
-                print(error.localizedDescription)
-            } else if let data = data {
-                let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-                let movies = dataDictionary["results"] as! [[String: Any]]
-                self.movies = movies
-                self.tableView.reloadData()
-                self.refreshControl.endRefreshing()
-                SVProgressHUD.dismiss()
+        if (showNowPlayingMovies) {
+            MovieApiManager().nowPlayingMovies { (movies: [Movie]?, error: Error?) in
+                if let movies = movies {
+                    self.movies = movies
+                    self.tableView.reloadData()
+                    self.refreshControl.endRefreshing()
+                    SVProgressHUD.dismiss()
+                }
             }
         }
-        task.resume()
+        else {
+            MovieApiManager().popularMovies { (movies: [Movie]?, error: Error?) in
+                if let movies = movies {
+                    self.movies = movies
+                    self.tableView.reloadData()
+                    self.refreshControl.endRefreshing()
+                    SVProgressHUD.dismiss()
+                }
+            }
+        }
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -102,12 +118,8 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource, UISearc
             filteredMovies = movies
         }
         else {
-            filteredMovies = movies.filter({ (movie: [String: Any]) -> Bool in
-                //let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-                if let title = movie["title"] as? String {
-                    return title.range(of: searchText, options: .caseInsensitive) != nil
-                }
-                return false
+            filteredMovies = movies.filter({ (movie: Movie) -> Bool in
+                return movie.title.range(of: searchText, options: .caseInsensitive) != nil
             })
         }
         tableView.reloadData()
@@ -124,22 +136,12 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource, UISearc
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
         cell.backgroundColor = UIColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 1.0)
         
-        var movie: [String: Any]
-        
         if (searchBar.text?.isEmpty)! {
-            movie = movies[indexPath.row]
+            cell.movie = movies[indexPath.row]
         }
         else {
-            movie = filteredMovies[indexPath.row]
+            cell.movie = filteredMovies[indexPath.row]
         }
-        let title = movie["title"] as! String
-        let overview = movie["overview"] as! String
-        cell.titleLabel.text = title
-        cell.overviewLabel.text = overview
-        let posterPathString = movie["poster_path"] as! String
-        let baseURLString = "https://image.tmdb.org/t/p/w500/"
-        let posterURL = URL(string: baseURLString + posterPathString)!
-        cell.posterImageView.af_setImage(withURL: posterURL)
         
         return cell
     }
@@ -148,7 +150,7 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource, UISearc
         let cell = sender as! UITableViewCell
         if let indexPath = tableView.indexPath(for: cell) {
             tableView.deselectRow(at: indexPath, animated: true)
-            var movie: [String: Any]
+            var movie: Movie
             if (searchBar.text?.isEmpty)! {
                 movie = movies[indexPath.row]
             }

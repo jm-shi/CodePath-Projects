@@ -14,10 +14,12 @@ import Reachability
 class SuperheroViewController: UIViewController, UICollectionViewDataSource, UISearchBarDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var movieTypeBarButtonItem: UIBarButtonItem!
     
-    var movies: [[String: Any]] = []
+    var movies: [Movie] = []
     
     var refreshControl: UIRefreshControl!
+    var showNowPlayingMovies = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,10 +50,17 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource, UIS
         
         fetchMovies()
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+
+    @IBAction func onMovieType(_ sender: Any) {
+        if (showNowPlayingMovies) {
+            movieTypeBarButtonItem.title = "Popular"
+        }
+        else {
+            movieTypeBarButtonItem.title = "Now Playing"
+        }
+        showNowPlayingMovies = !showNowPlayingMovies
+        
+        fetchMovies()
     }
     
     func didPullToRefresh(_ refreshControl: UIRefreshControl) {
@@ -80,23 +89,26 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource, UIS
         
         SVProgressHUD.show()
         
-        let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=fbd72556c509fc83d2efb12b935571d4")!
-        let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
-        let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
-        let task = session.dataTask(with: request) { (data, response, error) in
-            // This will run when the network request returns
-            if let error = error {
-                print(error.localizedDescription)
-            } else if let data = data {
-                let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-                let movies = dataDictionary["results"] as! [[String: Any]]
-                self.movies = movies
-                self.collectionView.reloadData()
-                self.refreshControl.endRefreshing()
-                SVProgressHUD.dismiss()
+        if (showNowPlayingMovies) {
+            MovieApiManager().nowPlayingMovies { (movies: [Movie]?, error: Error?) in
+                if let movies = movies {
+                    self.movies = movies
+                    self.collectionView.reloadData()
+                    self.refreshControl.endRefreshing()
+                    SVProgressHUD.dismiss()
+                }
             }
         }
-        task.resume()
+        else {
+            MovieApiManager().popularMovies { (movies: [Movie]?, error: Error?) in
+                if let movies = movies {
+                    self.movies = movies
+                    self.collectionView.reloadData()
+                    self.refreshControl.endRefreshing()
+                    SVProgressHUD.dismiss()
+                }
+            }
+        }
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -107,11 +119,10 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource, UIS
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PosterCell", for: indexPath) as! PosterCell
         let movie = movies[indexPath.item]
-        if let posterPathString = movie["poster_path"] as? String {
-            let baseURLString = "https://image.tmdb.org/t/p/w500/"
-            let posterURL = URL(string: baseURLString + posterPathString)!
-            cell.posterImageView.af_setImage(withURL: posterURL)
-        }
+        let baseURLString = "https://image.tmdb.org/t/p/w500/"
+        let posterURL = URL(string: baseURLString + movie.poster_path)
+        cell.posterImageView.af_setImage(withURL: posterURL!)
+
         return cell
     }
     

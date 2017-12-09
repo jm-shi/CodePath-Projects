@@ -25,18 +25,18 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var overviewLabel: UILabel!
     
-    var movie: [String: Any]?
+    var movie: Movie?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         if let movie = movie {
-            titleLabel.text = movie[MovieKeys.title] as? String
-            releaseDateLabel.text = movie[MovieKeys.release_date] as? String
-            overviewLabel.text = movie[MovieKeys.overview] as? String
+            titleLabel.text = movie.title
+            releaseDateLabel.text = movie.release_date
+            overviewLabel.text = movie.overview
            
-            let backdropPathString = movie[MovieKeys.backdropPath] as! String
-            let posterPathString = movie[MovieKeys.posterPath] as! String
+            let backdropPathString = movie.backdrop_path
+            let posterPathString = movie.poster_path
             let baseURLString = "https://image.tmdb.org/t/p/w500/"
             
             let backdropURL = URL(string: baseURLString + backdropPathString)!
@@ -56,7 +56,7 @@ class DetailViewController: UIViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let trailerViewController = segue.destination as! TrailerViewController
-        trailerViewController.movieID = movie?[MovieKeys.id] as! Int
+        trailerViewController.movieID = (movie?.id)!
     }
     
 }

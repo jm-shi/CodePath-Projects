@@ -36,7 +36,7 @@
                                         <rect key="frame" x="0.0" y="72" width="375" height="154"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BVP-In-Mf4" id="vMd-y7-ZnW">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="153"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="153.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6pu-Kt-Id9">
@@ -94,8 +94,15 @@
                             <constraint firstItem="OZt-Ue-lNd" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="llH-SH-UPq"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Movies" id="ZgD-U7-dEH"/>
+                    <navigationItem key="navigationItem" title="Movies" id="ZgD-U7-dEH">
+                        <barButtonItem key="rightBarButtonItem" title="Now Playing" id="YfN-Av-GTp">
+                            <connections>
+                                <action selector="onMovieType:" destination="BYZ-38-t0r" id="T19-tu-E51"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="movieTypeBarButtonItem" destination="YfN-Av-GTp" id="JHH-Ut-TgZ"/>
                         <outlet property="searchBar" destination="Ywl-TQ-JEY" id="Btz-Qx-zXt"/>
                         <outlet property="tableView" destination="OZt-Ue-lNd" id="IeS-fA-OJ6"/>
                     </connections>
@@ -327,9 +334,16 @@
                             <constraint firstAttribute="trailing" secondItem="ebh-NI-vDM" secondAttribute="trailing" id="leb-mw-wGG"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Movies" id="dVh-qf-pg9"/>
+                    <navigationItem key="navigationItem" title="Movies" id="dVh-qf-pg9">
+                        <barButtonItem key="rightBarButtonItem" title="Now Playing" id="sKQ-Uw-1vo">
+                            <connections>
+                                <action selector="onMovieType:" destination="clY-u4-HeM" id="cFh-4y-c42"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="ebh-NI-vDM" id="f9H-Hp-xGk"/>
+                        <outlet property="movieTypeBarButtonItem" destination="sKQ-Uw-1vo" id="YSx-Kw-gky"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sNp-fn-tqL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -361,6 +375,6 @@
         <image name="superhero_tabbar_item" width="21" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="trW-VO-FNe"/>
+        <segue reference="hmM-fn-9rd"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -37,7 +37,6 @@ The following **optional** features are implemented:
 - [x] In the detail view, when the user taps the poster, a new screen is presented modally where they can view the trailer
 - [x] Customize the navigation bar
 
-
 ## User Stories
 
 The following **required** user stories are complete:
@@ -51,11 +50,20 @@ The following **optional** user stories are implemented:
 - [ ] Dynamic Height Cells
 - [ ] Collection View AutoLayout
 
+## User Stories
+
+The following **required** user stories are complete:
+
+- [x] Create a movie model
+- [x] Implement the movie model
+- [x] Implement property observers
+- [x] Create a basic API Client
+
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-[Link to GIF Walkthrough](https://i.imgur.com/69ZmvUl.gif)
+[Link to GIF Walkthrough](https://i.imgur.com/SDKcM15.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
