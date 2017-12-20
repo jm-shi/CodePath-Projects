@@ -43,11 +43,6 @@ class TrailerViewController: UIViewController {
         task.resume()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     @IBAction func dismissTrailer(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }

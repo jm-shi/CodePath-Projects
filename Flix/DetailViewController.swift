@@ -23,6 +23,8 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var releaseDateLabel: UILabel!
+    @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var voteCountLabel: UILabel!
     @IBOutlet weak var overviewLabel: UILabel!
     
     var movie: Movie?
@@ -32,7 +34,17 @@ class DetailViewController: UIViewController {
 
         if let movie = movie {
             titleLabel.text = movie.title
-            releaseDateLabel.text = movie.release_date
+            ratingLabel.text = "Rating: " + String(movie.vote_average)
+            ratingLabel.layer.cornerRadius = 3
+            updateRatingColor(rating: movie.vote_average)
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            let formattedDate = dateFormatter.date(from: movie.release_date)
+            dateFormatter.dateFormat = "MMMM d, yyyy"
+            releaseDateLabel.text = dateFormatter.string(from: formattedDate!)
+            
+            voteCountLabel.text = String(movie.vote_count) + " Votes"
             overviewLabel.text = movie.overview
            
             let backdropPathString = movie.backdrop_path
@@ -44,11 +56,25 @@ class DetailViewController: UIViewController {
             
             let posterPathURL = URL(string: baseURLString + posterPathString)!
             posterImageView.af_setImage(withURL: posterPathURL)
-            
-            
         }
     }
 
+    func updateRatingColor(rating: Float) {
+        if rating == 0.0 {
+            ratingLabel.layer.backgroundColor = UIColor.gray.cgColor
+            ratingLabel.text = "Unrated"
+        }
+        else if rating >= 7.0 {
+            ratingLabel.layer.backgroundColor = UIColor.green.cgColor
+        }
+        else if rating >= 6.0 {
+            ratingLabel.layer.backgroundColor = UIColor.yellow.cgColor
+        }
+        else {
+            ratingLabel.layer.backgroundColor = UIColor.red.cgColor
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let trailerViewController = segue.destination as! TrailerViewController
         trailerViewController.movieID = (movie?.id)!
