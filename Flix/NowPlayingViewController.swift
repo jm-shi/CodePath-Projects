@@ -37,7 +37,7 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource, UISearc
         }
         
         searchBar.barTintColor = UIColor.black
-        searchBar.tintColor = UIColor.black
+        searchBar.tintColor = UIColor.white
         if let searchTextField = searchBar.value(forKey: "_searchField") as? UITextField {
             searchTextField.backgroundColor = UIColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 1.0)
             searchTextField.textColor = UIColor.white
@@ -127,6 +127,20 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource, UISearc
             })
         }
         tableView.reloadData()
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        self.searchBar.showsCancelButton = true
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        self.searchBar.showsCancelButton = false
+        self.searchBar.resignFirstResponder()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.searchBar.showsCancelButton = false
+        self.searchBar.resignFirstResponder()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

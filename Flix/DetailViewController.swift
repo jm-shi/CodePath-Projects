@@ -19,6 +19,8 @@ enum MovieKeys {
 
 class DetailViewController: UIViewController {
 
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     @IBOutlet weak var backdropImageView: UIImageView!
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -31,6 +33,12 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        scrollView.backgroundColor = UIColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 1.0)
+        titleLabel.textColor = UIColor.white
+        releaseDateLabel.textColor = UIColor.white
+        voteCountLabel.textColor = UIColor.white
+        overviewLabel.textColor = UIColor.white
 
         if let movie = movie {
             titleLabel.text = movie.title
