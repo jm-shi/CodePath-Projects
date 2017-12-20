@@ -7,13 +7,13 @@
 //
 
 import UIKit
+import AlamofireImage
 
 class MovieCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var overviewLabel: UILabel!
     @IBOutlet weak var posterImageView: UIImageView!
-    
 
     var movie: Movie! {
         didSet {
@@ -21,9 +21,19 @@ class MovieCell: UITableViewCell {
             overviewLabel.text = movie.overview
             
             let posterPathString = movie.poster_path
-            let baseURLString = "https://image.tmdb.org/t/p/w500/"
-            let posterURL = URL(string: baseURLString + posterPathString)!
-            posterImageView.af_setImage(withURL: posterURL)
+            let lowResBaseURL = "https://image.tmdb.org/t/p/w45/"
+            let highResBaseURL = "https://image.tmdb.org/t/p/w500/"
+            
+            let placeholderImage = UIImage(named: lowResBaseURL + posterPathString)
+            let filter = AspectScaledToFillSizeWithRoundedCornersFilter(size: posterImageView.frame.size, radius: 20)
+            
+            posterImageView.af_setImage(
+                withURL: URL(string: highResBaseURL + posterPathString)!,
+                placeholderImage: placeholderImage,
+                filter: filter,
+                imageTransition: .crossDissolve(0.2)
+            )
+            //posterImageView.af_setImage(withURL: posterURL)
         }
     }
     
@@ -31,12 +41,6 @@ class MovieCell: UITableViewCell {
         super.awakeFromNib()
         titleLabel.textColor = UIColor.white
         overviewLabel.textColor = UIColor.white
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
 }

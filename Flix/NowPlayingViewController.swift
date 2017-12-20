@@ -21,7 +21,7 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource, UISearc
     var filteredMovies: [Movie] = []
     
     var refreshControl: UIRefreshControl!
-    var showNowPlayingMovies = true
+    var currMovieType: String = "now_playing"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,20 +48,36 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource, UISearc
         refreshControl.addTarget(self, action: #selector(NowPlayingViewController.didPullToRefresh(_:)), for: .valueChanged)
         tableView.insertSubview(refreshControl, at: 0)
         
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 50
         tableView.dataSource = self
         searchBar.delegate = self
         fetchMovies()
     }
     
     @IBAction func onMovieType(_ sender: Any) {
-        if (showNowPlayingMovies) {
-            movieTypeBarButtonItem.title = "Popular"
+        if let currMovieType = movieTypeBarButtonItem.title {
+            if currMovieType == "Now Playing" {
+                movieTypeBarButtonItem.title = "Popular"
+                self.currMovieType = "popular"
+                self.tabBarController?.tabBar.items?[0].title = "Popular"
+            }
+            else if currMovieType == "Popular" {
+                movieTypeBarButtonItem.title = "Top Rated"
+                self.currMovieType = "top_rated"
+                self.tabBarController?.tabBar.items?[0].title = "Top Rated"
+            }
+            else if currMovieType == "Top Rated" {
+                movieTypeBarButtonItem.title = "Upcoming"
+                self.currMovieType = "upcoming"
+                self.tabBarController?.tabBar.items?[0].title = "Upcoming"
+            }
+            else {
+                movieTypeBarButtonItem.title = "Now Playing"
+                self.currMovieType = "now_playing"
+                self.tabBarController?.tabBar.items?[0].title = "Now Playing"
+            }
         }
-        else {
-            movieTypeBarButtonItem.title = "Now Playing"
-        }
-        showNowPlayingMovies = !showNowPlayingMovies
-        
         fetchMovies()
     }
     
@@ -91,26 +107,14 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource, UISearc
         
         SVProgressHUD.show()
         
-        if (showNowPlayingMovies) {
-            MovieApiManager().nowPlayingMovies { (movies: [Movie]?, error: Error?) in
-                if let movies = movies {
-                    self.movies = movies
-                    self.tableView.reloadData()
-                    self.refreshControl.endRefreshing()
-                    SVProgressHUD.dismiss()
-                }
+        MovieApiManager().showMovies(endpoint: currMovieType, completion: { (movies: [Movie]?, error: Error?) in
+            if let movies = movies {
+                self.movies = movies
+                self.tableView.reloadData()
+                self.refreshControl.endRefreshing()
+                SVProgressHUD.dismiss()
             }
-        }
-        else {
-            MovieApiManager().popularMovies { (movies: [Movie]?, error: Error?) in
-                if let movies = movies {
-                    self.movies = movies
-                    self.tableView.reloadData()
-                    self.refreshControl.endRefreshing()
-                    SVProgressHUD.dismiss()
-                }
-            }
-        }
+        })
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

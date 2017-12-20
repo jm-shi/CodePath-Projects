@@ -19,7 +19,7 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource, UIS
     var movies: [Movie] = []
     
     var refreshControl: UIRefreshControl!
-    var showNowPlayingMovies = true
+    var currMovieType: String = "popular"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,14 +52,28 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource, UIS
     }
 
     @IBAction func onMovieType(_ sender: Any) {
-        if (showNowPlayingMovies) {
-            movieTypeBarButtonItem.title = "Popular"
+        if let currMovieType = movieTypeBarButtonItem.title {
+            if currMovieType == "Now Playing" {
+                movieTypeBarButtonItem.title = "Popular"
+                self.currMovieType = "popular"
+                self.tabBarController?.tabBar.items?[1].title = "Popular"
+            }
+            else if currMovieType == "Popular" {
+                movieTypeBarButtonItem.title = "Top Rated"
+                self.currMovieType = "top_rated"
+                self.tabBarController?.tabBar.items?[1].title = "Top Rated"
+            }
+            else if currMovieType == "Top Rated" {
+                movieTypeBarButtonItem.title = "Upcoming"
+                self.currMovieType = "upcoming"
+                self.tabBarController?.tabBar.items?[1].title = "Upcoming"
+            }
+            else {
+                movieTypeBarButtonItem.title = "Now Playing"
+                self.currMovieType = "now_playing"
+                self.tabBarController?.tabBar.items?[1].title = "Now Playing"
+            }
         }
-        else {
-            movieTypeBarButtonItem.title = "Now Playing"
-        }
-        showNowPlayingMovies = !showNowPlayingMovies
-        
         fetchMovies()
     }
     
@@ -88,27 +102,15 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource, UIS
         }
         
         SVProgressHUD.show()
-        
-        if (showNowPlayingMovies) {
-            MovieApiManager().nowPlayingMovies { (movies: [Movie]?, error: Error?) in
-                if let movies = movies {
-                    self.movies = movies
-                    self.collectionView.reloadData()
-                    self.refreshControl.endRefreshing()
-                    SVProgressHUD.dismiss()
-                }
+
+        MovieApiManager().showMovies(endpoint: currMovieType, completion: { (movies: [Movie]?, error: Error?) in
+            if let movies = movies {
+                self.movies = movies
+                self.collectionView.reloadData()
+                self.refreshControl.endRefreshing()
+                SVProgressHUD.dismiss()
             }
-        }
-        else {
-            MovieApiManager().popularMovies { (movies: [Movie]?, error: Error?) in
-                if let movies = movies {
-                    self.movies = movies
-                    self.collectionView.reloadData()
-                    self.refreshControl.endRefreshing()
-                    SVProgressHUD.dismiss()
-                }
-            }
-        }
+        })
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

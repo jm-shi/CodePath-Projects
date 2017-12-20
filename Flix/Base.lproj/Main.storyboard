@@ -41,11 +41,10 @@
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6pu-Kt-Id9">
                                                     <rect key="frame" x="8" y="13" width="107" height="128"/>
-                                                    <color key="backgroundColor" red="0.29530201340000001" green="0.4365037752" blue="0.69798657720000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" red="0.29803921568627451" green="0.29803921568627451" blue="0.29999999999999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="107" id="4jo-Rl-Uhc"/>
                                                         <constraint firstAttribute="height" constant="128" id="Igi-Mr-o4i"/>
-                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="128" id="alJ-FY-8WS"/>
                                                         <constraint firstAttribute="width" constant="107" id="ctc-dU-xtx"/>
                                                     </constraints>
                                                 </imageView>
@@ -65,7 +64,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="6pu-Kt-Id9" firstAttribute="top" secondItem="vMd-y7-ZnW" secondAttribute="top" constant="13" id="2VE-6i-nkx"/>
-                                                <constraint firstAttribute="bottom" secondItem="6pu-Kt-Id9" secondAttribute="bottom" constant="13" id="6ae-An-pQC"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="6pu-Kt-Id9" secondAttribute="bottom" constant="13" id="6ae-An-pQC"/>
                                                 <constraint firstItem="6pu-Kt-Id9" firstAttribute="leading" secondItem="vMd-y7-ZnW" secondAttribute="leading" constant="8" id="Nqf-7A-pIH"/>
                                                 <constraint firstItem="4tF-vA-PsK" firstAttribute="top" secondItem="vMd-y7-ZnW" secondAttribute="top" constant="8" id="PAY-Wi-PGY"/>
                                                 <constraint firstItem="23f-gI-OsL" firstAttribute="leading" secondItem="6pu-Kt-Id9" secondAttribute="trailing" constant="8" id="RIU-FV-PHJ"/>
@@ -335,7 +334,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Movies" id="dVh-qf-pg9">
-                        <barButtonItem key="rightBarButtonItem" title="Now Playing" id="sKQ-Uw-1vo">
+                        <barButtonItem key="rightBarButtonItem" title="Popular" id="sKQ-Uw-1vo">
                             <connections>
                                 <action selector="onMovieType:" destination="clY-u4-HeM" id="cFh-4y-c42"/>
                             </connections>
@@ -350,11 +349,11 @@
             </objects>
             <point key="canvasLocation" x="1001" y="754"/>
         </scene>
-        <!--Superhero-->
+        <!--Popular-->
         <scene sceneID="bjP-jl-qIc">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YX5-nB-W5a" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Superhero" image="superhero_tabbar_item" id="2eH-QG-Bs2"/>
+                    <tabBarItem key="tabBarItem" title="Popular" image="superhero_tabbar_item" id="2eH-QG-Bs2"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="fcb-Xj-Md1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -375,6 +374,6 @@
         <image name="superhero_tabbar_item" width="21" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="hmM-fn-9rd"/>
+        <segue reference="trW-VO-FNe"/>
     </inferredMetricsTieBreakers>
 </document>
