@@ -18,8 +18,9 @@ class MovieApiManager {
         session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
     }
     
-    func showMovies(endpoint: String, completion: @escaping ([Movie]?, Error?) -> ()) {
-        let url = URL(string: MovieApiManager.baseUrl + "\(endpoint)?api_key=\(MovieApiManager.apiKey)")!
+    func showMovies(listedMovies: [Movie], endpoint: String, page: String, completion: @escaping ([Movie]?, Error?) -> ()) {
+        var shownMovies = listedMovies
+        let url = URL(string: MovieApiManager.baseUrl + "\(endpoint)?api_key=\(MovieApiManager.apiKey)" + "&page=\(page)")!
         let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
         let task = session.dataTask(with: request) { (data, response, error) in
             // This will run when the network request returns
@@ -27,8 +28,8 @@ class MovieApiManager {
                 let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
                 let movieDictionaries = dataDictionary["results"] as! [[String: Any]]
                 
-                let movies = Movie.movies(dictionaries: movieDictionaries)
-                completion(movies, nil)
+                shownMovies += Movie.movies(dictionaries: movieDictionaries)
+                completion(shownMovies, nil)
             } else {
                 completion(nil, error)
             }

@@ -11,7 +11,7 @@ import AlamofireImage
 import SVProgressHUD
 import Reachability
 
-class NowPlayingViewController: UIViewController, UITableViewDataSource, UISearchBarDelegate {
+class NowPlayingViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UIScrollViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -22,6 +22,8 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource, UISearc
     
     var refreshControl: UIRefreshControl!
     var currMovieType: String = "now_playing"
+    var page: Int = 1
+    var isMoreDataLoading = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +52,7 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource, UISearc
         
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 50
+        tableView.delegate = self
         tableView.dataSource = self
         searchBar.delegate = self
         fetchMovies()
@@ -107,11 +110,12 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource, UISearc
         
         SVProgressHUD.show()
         
-        MovieApiManager().showMovies(endpoint: currMovieType, completion: { (movies: [Movie]?, error: Error?) in
+        MovieApiManager().showMovies(listedMovies: movies, endpoint: currMovieType, page: String(page), completion: { (movies: [Movie]?, error: Error?) in
             if let movies = movies {
                 self.movies = movies
                 self.tableView.reloadData()
                 self.refreshControl.endRefreshing()
+                self.isMoreDataLoading = false
                 SVProgressHUD.dismiss()
             }
         })
@@ -141,6 +145,19 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource, UISearc
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.searchBar.showsCancelButton = false
         self.searchBar.resignFirstResponder()
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (!isMoreDataLoading) {
+            let scrollViewContentHeight = tableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
+            
+            if (scrollView.contentOffset.y > scrollOffsetThreshold && tableView.isDragging) {
+                isMoreDataLoading = true
+                page += 1
+                fetchMovies()
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

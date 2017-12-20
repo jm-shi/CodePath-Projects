@@ -11,7 +11,7 @@ import AlamofireImage
 import SVProgressHUD
 import Reachability
 
-class SuperheroViewController: UIViewController, UICollectionViewDataSource, UISearchBarDelegate {
+class SuperheroViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate, UIScrollViewDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var movieTypeBarButtonItem: UIBarButtonItem!
@@ -20,6 +20,8 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource, UIS
     
     var refreshControl: UIRefreshControl!
     var currMovieType: String = "popular"
+    var page: Int = 1
+    var isMoreDataLoading = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +41,7 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource, UIS
         collectionView.insertSubview(refreshControl, at: 0)
         
         collectionView.dataSource = self
+        collectionView.delegate = self
         collectionView.backgroundColor = UIColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 1.0)
         
         let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
@@ -104,14 +107,28 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource, UIS
         
         SVProgressHUD.show()
 
-        MovieApiManager().showMovies(endpoint: currMovieType, completion: { (movies: [Movie]?, error: Error?) in
+        MovieApiManager().showMovies(listedMovies: movies, endpoint: currMovieType, page: String(page), completion: { (movies: [Movie]?, error: Error?) in
             if let movies = movies {
                 self.movies = movies
                 self.collectionView.reloadData()
                 self.refreshControl.endRefreshing()
+                self.isMoreDataLoading = false
                 SVProgressHUD.dismiss()
             }
         })
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (!isMoreDataLoading) {
+            let scrollViewContentHeight = collectionView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - collectionView.bounds.size.height
+            
+            if (scrollView.contentOffset.y > scrollOffsetThreshold && collectionView.isDragging) {
+                isMoreDataLoading = true
+                page += 1
+                fetchMovies()
+            }
+        }
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
