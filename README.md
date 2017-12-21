@@ -63,7 +63,7 @@ The following **required** user stories are complete:
 
 Here's a walkthrough of implemented user stories:
 
-[Link to GIF Walkthrough](https://i.imgur.com/SDKcM15.gif)
+[Link to GIF Walkthrough](https://i.imgur.com/3cokVnN.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 

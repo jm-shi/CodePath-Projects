@@ -11,12 +11,14 @@ import AlamofireImage
 import SVProgressHUD
 import Reachability
 
-class SuperheroViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate, UIScrollViewDelegate {
-    
+class CollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate, UIScrollViewDelegate {
+
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var movieTypeBarButtonItem: UIBarButtonItem!
     
     var movies: [Movie] = []
+    var filteredMovies: [Movie] = []
     
     var refreshControl: UIRefreshControl!
     var currMovieType: String = "popular"
@@ -36,8 +38,17 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource, UIC
             tabBar.tintColor = UIColor.white
         }
         
+        searchBar.placeholder = "Search Movies"
+        searchBar.delegate = self
+        searchBar.tintColor = .white
+        searchBar.barTintColor = UIColor.black
+        if let searchTextField = searchBar.value(forKey: "_searchField") as? UITextField {
+            searchTextField.backgroundColor = UIColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 1.0)
+            searchTextField.textColor = UIColor.white
+        }
+
         refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(SuperheroViewController.didPullToRefresh(_:)), for: .valueChanged)
+        refreshControl.addTarget(self, action: #selector(CollectionViewController.didPullToRefresh(_:)), for: .valueChanged)
         collectionView.insertSubview(refreshControl, at: 0)
         
         collectionView.dataSource = self
@@ -56,6 +67,8 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource, UIC
     }
 
     @IBAction func onMovieType(_ sender: Any) {
+        self.movies = []
+        self.filteredMovies = []
         if let currMovieType = movieTypeBarButtonItem.title {
             if currMovieType == "Now Playing" {
                 movieTypeBarButtonItem.title = "Popular"
@@ -118,6 +131,38 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource, UIC
         })
     }
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            filteredMovies = movies
+        }
+        else {
+            filteredMovies = movies.filter({ (movie: Movie) -> Bool in
+                return movie.title.range(of: searchText, options: .caseInsensitive) != nil
+            })
+        }
+        collectionView.reloadData()
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
+        searchBar.endEditing(true)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        searchBar.showsCancelButton = false
+        searchBar.endEditing(true)
+        collectionView.reloadData()
+    }
+    
+    func dismissKeyboard() {
+        searchBar.endEditing(true)
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (!isMoreDataLoading) {
             let scrollViewContentHeight = collectionView.contentSize.height
@@ -132,24 +177,40 @@ class SuperheroViewController: UIViewController, UICollectionViewDataSource, UIC
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return movies.count
-        
+        if (searchBar.text?.isEmpty)! {
+            return movies.count
+        }
+        return filteredMovies.count
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PosterCell", for: indexPath) as! PosterCell
-        let movie = movies[indexPath.item]
+        
+        var movie: Movie
+        if (searchBar.text?.isEmpty)! {
+            movie = movies[indexPath.item]
+        }
+        else {
+            movie = filteredMovies[indexPath.item]
+        }
+        
         let baseURLString = "https://image.tmdb.org/t/p/w500/"
         let posterURL = URL(string: baseURLString + movie.poster_path)
         cell.posterImageView.af_setImage(withURL: posterURL!)
-
+        
         return cell
     }
     
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let cell = sender as! UICollectionViewCell
         if let indexPath = collectionView.indexPath(for: cell) {
-            let movie = movies[indexPath.item]
+            var movie: Movie
+            if (searchBar.text?.isEmpty)! {
+                movie = movies[indexPath.row]
+            }
+            else {
+                movie = filteredMovies[indexPath.row]
+            }
             let detailViewController = segue.destination as! DetailViewController
             detailViewController.movie = movie
         }

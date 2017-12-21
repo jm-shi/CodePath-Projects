@@ -38,12 +38,14 @@ class NowPlayingViewController: UIViewController, UITableViewDelegate, UITableVi
             tabBar.tintColor = UIColor.white
         }
         
+        searchBar.placeholder = "Search Movies"
         searchBar.barTintColor = UIColor.black
         searchBar.tintColor = UIColor.white
         if let searchTextField = searchBar.value(forKey: "_searchField") as? UITextField {
             searchTextField.backgroundColor = UIColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 1.0)
             searchTextField.textColor = UIColor.white
         }
+        
         tableView.backgroundColor = UIColor(red: 0.3, green: 0.3, blue: 0.3, alpha: 1.0)
         
         refreshControl = UIRefreshControl()
@@ -59,6 +61,8 @@ class NowPlayingViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     @IBAction func onMovieType(_ sender: Any) {
+        self.movies = []
+        self.filteredMovies = []
         if let currMovieType = movieTypeBarButtonItem.title {
             if currMovieType == "Now Playing" {
                 movieTypeBarButtonItem.title = "Popular"
@@ -134,17 +138,19 @@ class NowPlayingViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        self.searchBar.showsCancelButton = true
+        searchBar.showsCancelButton = true
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        self.searchBar.showsCancelButton = false
-        self.searchBar.resignFirstResponder()
+        searchBar.showsCancelButton = false
+        searchBar.endEditing(true)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        self.searchBar.showsCancelButton = false
-        self.searchBar.resignFirstResponder()
+        searchBar.text = ""
+        searchBar.showsCancelButton = false
+        searchBar.endEditing(true)
+        tableView.reloadData()
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
