@@ -7,14 +7,14 @@ Tumblr is a photo browsing app using the [The Tumblr API](https://www.tumblr.com
 
 The following **required** user stories are complete:
 
-- [x] User can scroll through a feed of images returned from the Tumblr API (5pts)
+- [x] User can scroll through a feed of images returned from the Tumblr API
 
 The following **stretch** user stories are implemented:
 
-- [ ] User sees an alert when there's a networking error (+1pt)
-- [ ] While poster is being fetched, user see's a placeholder image (+1pt)
-- [ ] User sees image transition for images coming from network, not when it is loaded from cache (+1pt)
-- [ ] Customize the selection effect of the cell (+1pt)
+- [ ] User sees an alert when there's a networking error
+- [ ] While poster is being fetched, user see's a placeholder image
+- [ ] User sees image transition for images coming from network, not when it is loaded from cache
+- [ ] Customize the selection effect of the cell
 
 # Lab 2 - Tumblr
 
@@ -22,13 +22,13 @@ The following **stretch** user stories are implemented:
 
 The following **required** user stories are complete:
 
-- [x] User can tap an image to view a larger image in a detail view (5pts)
+- [x] User can tap an image to view a larger image in a detail view
 
 The following **stretch** user stories are implemented:
 
-- [ ] Add Avatar and Publish Dates (+2pt)
-- [ ] Zoomable Photo View (+2pt)
-- [ ] Infinite Scrolling (+2pt)
+- [ ] Add Avatar and Publish Dates
+- [ ] Zoomable Photo View
+- [ ] Infinite Scrolling
 
 ## Video Walkthrough
 
