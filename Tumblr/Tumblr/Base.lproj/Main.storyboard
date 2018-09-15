@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1611" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="7eb-9U-9CT">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Photos View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="PhotosViewController" customModule="Tumblr" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="a7Q-9N-a5d"/>
+                        <viewControllerLayoutGuide type="bottom" id="dtS-QX-8s8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="180" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rpI-yb-NZb">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="photoCell" rowHeight="180" id="J0e-bv-hNX" customClass="PhotoCell" customModule="Tumblr" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="320" height="180"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="J0e-bv-hNX" id="iEb-b2-dQm">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="179"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="I8k-o8-Nu4">
+                                                    <rect key="frame" x="5" y="5" width="310" height="169.5"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="I8k-o8-Nu4" firstAttribute="leading" secondItem="iEb-b2-dQm" secondAttribute="leading" constant="5" id="BBF-6b-Eov"/>
+                                                <constraint firstAttribute="bottom" secondItem="I8k-o8-Nu4" secondAttribute="bottom" constant="5" id="arv-PP-Za1"/>
+                                                <constraint firstItem="I8k-o8-Nu4" firstAttribute="top" secondItem="iEb-b2-dQm" secondAttribute="top" constant="5" id="k4L-rJ-QK7"/>
+                                                <constraint firstAttribute="trailing" secondItem="I8k-o8-Nu4" secondAttribute="trailing" constant="5" id="xFO-bl-L8n"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="photo" destination="I8k-o8-Nu4" id="meX-1G-G7r"/>
+                                            <segue destination="KVw-BT-bWt" kind="push" id="t6k-Qw-WNq"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="rpI-yb-NZb" secondAttribute="bottom" id="DD2-tT-nQj"/>
+                            <constraint firstItem="rpI-yb-NZb" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Oh9-rX-ttD"/>
+                            <constraint firstItem="rpI-yb-NZb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="eUO-R9-gcq"/>
+                            <constraint firstAttribute="trailing" secondItem="rpI-yb-NZb" secondAttribute="trailing" id="iRH-SB-Yfc"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="GlQ-pg-X43"/>
+                    <connections>
+                        <outlet property="tableView" destination="rpI-yb-NZb" id="dXZ-5T-UWF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="660" y="137"/>
+        </scene>
+        <!--Photo Details View Controller-->
+        <scene sceneID="BZm-33-UKW">
+            <objects>
+                <viewController id="KVw-BT-bWt" customClass="PhotoDetailsViewController" customModule="Tumblr" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4qo-IB-k8P"/>
+                        <viewControllerLayoutGuide type="bottom" id="wj7-uG-9SX"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9tM-KE-dv4">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tEe-vJ-WQp">
+                                <rect key="frame" x="16" y="96" width="288" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="Lt5-NQ-Q41"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="tEe-vJ-WQp" firstAttribute="leading" secondItem="9tM-KE-dv4" secondAttribute="leading" constant="16" id="IOE-lm-c9Z"/>
+                            <constraint firstItem="tEe-vJ-WQp" firstAttribute="top" secondItem="4qo-IB-k8P" secondAttribute="bottom" constant="32" id="Ifc-WR-iUn"/>
+                            <constraint firstAttribute="trailing" secondItem="tEe-vJ-WQp" secondAttribute="trailing" constant="16" id="OWO-fT-Aih"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="AuX-Wc-gXp"/>
+                    <connections>
+                        <outlet property="detailsImageView" destination="tEe-vJ-WQp" id="0i0-r6-Gbj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vPC-Zx-qRU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1114" y="138"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="4f0-Nc-sGQ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7eb-9U-9CT" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Pa0-NV-3D0">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="6bf-bF-ck7"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="d33-Qx-Csf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="222" y="138"/>
+        </scene>
+    </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4_0.fullscreen"/>
+    </simulatedMetricsContainer>
+</document>
